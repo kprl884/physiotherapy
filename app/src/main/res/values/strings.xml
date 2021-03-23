@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Physiotherapy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="telefon_numaras">Telefon Numarası</string>
+    <string name="soyisim">Soyisim</string>
+    <string name="sim">İsim</string>
+    <string name="kay_t_ol">Kayıt ol</string>
+    <string name="giri_yap">Giriş yap</string>
+    <string name="ifremi_unuttum">Şifremi Unuttum</string>
+    <string name="password">password</string>
+    <string name="username">userName</string>
+    <string name="renciler">Öğrenciler</string>
+    <string name="profil">Profil</string>
+</resources>

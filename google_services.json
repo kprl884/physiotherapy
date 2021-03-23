@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "597525857613",
+    "project_id": "physiotherapy-dfdc5",
+    "storage_bucket": "physiotherapy-dfdc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597525857613:android:c1c8c4a155d26e55502304",
+        "android_client_info": {
+          "package_nam e": "com.example.physiotherapy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597525857613-90b7incqf2v7a9aje9brcsrikg3j1k57.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.physiotherapy",
+            "certificate_hash": "1184cb9d109bc04ec505ab9ffc0c5385198b520a"
+          }
+        },
+        {
+          "client_id": "597525857613-apnmuk9q1hgq0r3cre6s1d1355dpjnpg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsgwF8FYGYyuoJwkBncjVEWE5Y3wfMDi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597525857613-apnmuk9q1hgq0r3cre6s1d1355dpjnpg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
