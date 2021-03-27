@@ -1,4 +1,4 @@
-package com.example.physiotherapy.view.register
+package com.example.physiotherapy.view.auth.register
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

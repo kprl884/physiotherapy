@@ -10,4 +10,6 @@
     <string name="username">userName</string>
     <string name="renciler">Öğrenciler</string>
     <string name="profil">Profil</string>
+    <string name="hint_password">*****</string>
+    <string name="forget_password">Forget Password?</string>
 </resources>
