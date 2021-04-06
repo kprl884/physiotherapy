@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment"
         android:name="com.example.physiotherapy.view.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_studentsFragment"
+            app:destination="@id/studentsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.physiotherapy.view.auth.login.LoginFragment"
@@ -30,4 +34,23 @@
             android:id="@+id/action_registerFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/studentsFragment"
+        android:name="com.example.physiotherapy.view.students.StudentsFragment"
+        android:label="StudentsFragment" >
+        <action
+            android:id="@+id/action_studentsFragment_to_addStudentFragment"
+            app:destination="@id/addStudentFragment" />
+        <action
+            android:id="@+id/action_studentsFragment_to_selectedStudentFragment"
+            app:destination="@id/selectedStudentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addStudentFragment"
+        android:name="com.example.physiotherapy.view.students.AddStudentFragment"
+        android:label="AddStudentFragment" />
+    <fragment
+        android:id="@+id/selectedStudentFragment"
+        android:name="com.example.physiotherapy.view.students.SelectedStudentDetailFragment"
+        android:label="SelectedStudentFragment" />
 </navigation>

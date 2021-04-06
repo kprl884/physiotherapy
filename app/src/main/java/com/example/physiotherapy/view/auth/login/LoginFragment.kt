@@ -1,6 +1,6 @@
 package com.example.physiotherapy.view.auth.login
 
-import android.content.Context
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,12 +10,18 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
 import com.example.physiotherapy.view.auth.AuthListener
-import com.google.firebase.auth.FirebaseAuth
-import com.example.physiotherapy.view.util.toast
 import com.example.physiotherapy.viewmodel.AuthViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.*
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class LoginFragment : Fragment(), AuthListener {
@@ -23,11 +29,13 @@ class LoginFragment : Fragment(), AuthListener {
     private var userPassword:String = ""
     private var userName:String = ""
     private var mAuth: FirebaseAuth? = null
+    val currentUser = Firebase.auth.currentUser
     private lateinit var  viewModel:AuthViewModel
+    val db = Firebase.firestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();
@@ -35,6 +43,21 @@ class LoginFragment : Fragment(), AuthListener {
         viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this
+        //val userRecord: UserRecord = FirebaseAuth.getInstance().getUser(uid)
+
+        binding.loginBtnLogin.setOnClickListener {
+            Log.d("alp","login basildi")
+            findNavController(this).navigate(
+                R.id.action_loginFragment_to_homeFragment,
+                null,
+                navOptions { // Use the Kotlin DSL for building NavOptions
+                    anim {
+                        enter = android.R.animator.fade_in
+                        exit = android.R.animator.fade_out
+                    }
+                }
+            )
+        }
         return binding.root
     }
 
@@ -43,13 +66,56 @@ class LoginFragment : Fragment(), AuthListener {
         Toast.makeText(requireContext(), "Login Started", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onSucces() {
-        Toast.makeText(requireContext(), "Login Succes", Toast.LENGTH_SHORT).show()
+    override fun onSucces(userName: String, password: String) {
+        //login process
+        //home fragment
     }
 
     override fun onFailure(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    fun checkUserNamePassword(){
+        val docRef = db.collection("users").document("$currentUser")
+        docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("TAG", "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            val source = if (snapshot != null && snapshot.metadata.hasPendingWrites())
+                "Local"
+            else
+                "Server"
+
+            if (snapshot != null && snapshot.exists()) {
+                Log.d("TAG", "$source data: ${snapshot.data}")
+            } else {
+                Log.d("TAG", "$source data: null")
+            }
+        }
+    }
+
+    fun sendPasswordResetEmail(){
+        val emailAddress = "user@example.com"
+
+        Firebase.auth.sendPasswordResetEmail(emailAddress)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Email sent.")
+                }
+            }
+    }
+
+    fun deleteUser(){
+        val user = Firebase.auth.currentUser!!
+
+        user.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User account deleted.")
+                }
+            }
+    }
 
 }

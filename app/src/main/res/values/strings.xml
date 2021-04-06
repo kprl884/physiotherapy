@@ -14,4 +14,9 @@
     <string name="profil">Profil</string>
     <string name="hint_password">*****</string>
     <string name="forget_password">Forget Password?</string>
+    <string name="student_delete_icon">stundent delete icon</string>
+    <string name="renci_ekle">Öğrenci ekle</string>
+    <string name="nceki_sayfa">Önceki Sayfa</string>
+    <string name="ifre">Şifre</string>
+    <string name="kullan_c_ad">Kullanıcı adı</string>
 </resources>

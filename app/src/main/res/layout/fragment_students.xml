@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.students.StudentsFragment">
-        <TextView
-            android:id="@+id/textView"
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/student_frag_header"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/renciler"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/student_frag_btn_student_add"
+            app:layout_constraintTop_toBottomOf="@id/student_frag_header"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/renci_ekle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/student_recyclerView"
+            android:padding="10dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/student_frag_btn_student_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            tools:listitem="@layout/students_recyclerview_item"
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
