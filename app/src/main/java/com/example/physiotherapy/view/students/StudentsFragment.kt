@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentStudentsBinding
 import com.example.physiotherapy.model.Student
+import com.example.physiotherapy.view.profile.ProfileFragment
 
 
 class StudentsFragment : Fragment() {
@@ -46,6 +47,14 @@ class StudentsFragment : Fragment() {
                 })
         }
         return binding.root
+    }
+
+    companion object {
+        fun newInstance(): StudentsFragment = StudentsFragment()
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 
     private fun setRecyclerView() {

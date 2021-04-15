@@ -4,7 +4,12 @@ import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.physiotherapy.R
+import com.example.physiotherapy.view.home.HomeFragment
+import com.example.physiotherapy.view.profile.ProfileFragment
+import com.example.physiotherapy.view.students.StudentsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -12,8 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
-
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,10 +27,35 @@ class MainActivity : AppCompatActivity() {
     private var refSplashRefCodeBeginTime: DatabaseReference? = null
     private val database = FirebaseDatabase.getInstance()
     private val db = Firebase.firestore
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
+        when (menuItem.itemId) {
+            R.id.navigation_home -> {
+                val fragment = HomeFragment()
+                val homeFragment = HomeFragment.newInstance()
+                openFragment(homeFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_students -> {
+                val studentsFragment = StudentsFragment.newInstance()
+                openFragment(studentsFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_profile -> {
+                val profileFragment = ProfileFragment.newInstance()
+                openFragment(profileFragment)
+                return@OnNavigationItemSelectedListener true
+            }
+        }
+        false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        navigation_bottom.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+
         mAuth = FirebaseAuth.getInstance();
         Firebase.initialize(this)
         val database = FirebaseDatabase.getInstance()
@@ -61,6 +90,12 @@ class MainActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.w("TAG", "Error getting documents.", exception)
             }
+    }
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onStart() {

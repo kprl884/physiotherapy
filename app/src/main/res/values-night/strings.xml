@@ -16,4 +16,8 @@
     <string name="nceki_sayfa">Önceki Sayfa</string>
     <string name="ifre">Şifre</string>
     <string name="kullan_c_ad">Kullanıcı adı</string>
+    <string name="g_revler">Görevler</string>
+    <string name="notlar">Notlar</string>
+    <string name="home">Anasayfa</string>
+    <string name="profile">Profil</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentHomeBinding
 import com.example.physiotherapy.databinding.FragmentLoginBinding
+import com.example.physiotherapy.view.students.StudentsFragment
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -22,6 +23,8 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        /*
+
 
         binding.homeBtnStudens.setOnClickListener {
             it.findNavController().navigate(R.id.action_homeFragment_to_studentsFragment,null, navOptions { // Use the Kotlin DSL for building NavOptions
@@ -31,8 +34,17 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+ */
 
         return binding.root
+    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
+
+
+    companion object {
+        fun newInstance(): HomeFragment = HomeFragment()
     }
 
 }

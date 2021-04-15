@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_note"
+        android:icon="@drawable/ic_edit_note"
+        android:title="@string/notlar" />
+    <item
+        android:id="@+id/navigation_task"
+        android:icon="@drawable/ic_task"
+        android:title="@string/g_revler" />
+</menu>
