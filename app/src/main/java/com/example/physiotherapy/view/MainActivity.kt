@@ -1,6 +1,5 @@
 package com.example.physiotherapy.view
 
-import android.content.ContentValues
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -14,13 +13,13 @@ import com.example.physiotherapy.view.profile.ProfileFragment
 import com.example.physiotherapy.view.students.StudentsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -57,12 +56,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
+        //Objects.requireNonNull(actionBar)!!.setDisplayHomeAsUpEnabled(true)
         setActionBar(binding.toolbarLayout.toolbarLayout)
         binding.toolbarLayout.toolbarBackBtn.setOnClickListener { onBackPressed() }
 
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putBoolean(getString(R.string.is_user_loggin), isLoggin)
             apply()
         }

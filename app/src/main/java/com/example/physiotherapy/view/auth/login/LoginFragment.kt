@@ -59,8 +59,8 @@ class LoginFragment : BaseFragment(), AuthListener {
     }
 
     override fun onResume() {
-        setToolbarVisibility(resources.getString(R.string.app_name), View.GONE)
         super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
     }
 
     override fun onStarted() {

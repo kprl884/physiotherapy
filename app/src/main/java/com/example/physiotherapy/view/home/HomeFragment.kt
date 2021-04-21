@@ -1,25 +1,20 @@
 package com.example.physiotherapy.view.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
+import androidx.fragment.app.Fragment
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentHomeBinding
-import com.example.physiotherapy.databinding.FragmentLoginBinding
-import com.example.physiotherapy.view.students.StudentsFragment
+import com.example.physiotherapy.view.BaseFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
@@ -38,6 +33,11 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }

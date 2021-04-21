@@ -10,11 +10,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentRegisterBinding
+import com.example.physiotherapy.view.BaseFragment
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
     private lateinit var binding:FragmentRegisterBinding
 
     override fun onCreateView(
@@ -39,5 +40,10 @@ class RegisterFragment : Fragment() {
                     Log.d(TAG, "User password updated.")
                 }
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
     }
 }

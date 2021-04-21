@@ -40,30 +40,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-       <Button
-           android:id="@+id/login_btn_forger_btn"
-           android:text="@string/forget_password"
-           app:layout_constraintTop_toBottomOf="@id/login_et_password"
-           app:layout_constraintEnd_toEndOf="@id/login_et_password"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           />
+        <Button
+            android:id="@+id/login_btn_forger_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_password"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintEnd_toEndOf="@id/login_et_password"
+            app:layout_constraintTop_toBottomOf="@id/login_et_password" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/login_btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/giri_yap"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="italic"
             app:layout_constraintEnd_toEndOf="@id/login_et_password"
             app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/login_btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/kay_t_ol"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textStyle="bold|italic"
             app:layout_constraintStart_toStartOf="@id/login_et_password"
             app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
 

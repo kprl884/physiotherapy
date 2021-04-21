@@ -15,10 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentStudentsBinding
 import com.example.physiotherapy.model.Student
+import com.example.physiotherapy.view.BaseFragment
 import com.example.physiotherapy.view.profile.ProfileFragment
 
 
-class StudentsFragment : Fragment() {
+class StudentsFragment : BaseFragment() {
     private lateinit var binding: FragmentStudentsBinding
     val studentList = listOf(Student("Alparslan", "Köprülü", "alprslnk", "123456", 1),
         Student("Bera", "Gelebek", "beraglk", "123456", 2),
@@ -88,5 +89,10 @@ class StudentsFragment : Fragment() {
                 }
             }
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
     }
 }

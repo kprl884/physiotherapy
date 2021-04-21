@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentAddStudentBinding
+import com.example.physiotherapy.view.BaseFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,7 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AddStudentFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddStudentFragment : Fragment() {
+class AddStudentFragment : BaseFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -42,5 +43,9 @@ class AddStudentFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
+    }
 
 }

@@ -10,10 +10,11 @@ import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentBinding
 import com.example.physiotherapy.model.Tag
 import com.example.physiotherapy.model.Task
+import com.example.physiotherapy.view.BaseFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
-class SelectedStudentDetailFragment : Fragment() {
+class SelectedStudentDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,5 +41,10 @@ class SelectedStudentDetailFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE)
     }
 }
