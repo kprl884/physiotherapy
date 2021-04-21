@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
+import com.example.physiotherapy.view.BaseFragment
 import com.example.physiotherapy.view.auth.AuthListener
 import com.example.physiotherapy.viewmodel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -24,14 +25,12 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
-class LoginFragment : Fragment(), AuthListener {
+class LoginFragment : BaseFragment(), AuthListener {
     private lateinit var binding:FragmentLoginBinding
     private var userPassword:String = ""
     private var userName:String = ""
     private var mAuth: FirebaseAuth? = null
-    val currentUser = Firebase.auth.currentUser
-    private lateinit var  viewModel:AuthViewModel
-    val db = Firebase.firestore
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,9 +39,7 @@ class LoginFragment : Fragment(), AuthListener {
         // Inflate the layout for this fragment
         mAuth = FirebaseAuth.getInstance();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-        viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
-        binding.viewmodel = viewModel
-        viewModel.authListener = this
+
         //val userRecord: UserRecord = FirebaseAuth.getInstance().getUser(uid)
 
         binding.loginBtnLogin.setOnClickListener {
@@ -61,6 +58,10 @@ class LoginFragment : Fragment(), AuthListener {
         return binding.root
     }
 
+    override fun onResume() {
+        setToolbarVisibility(resources.getString(R.string.app_name), View.GONE)
+        super.onResume()
+    }
 
     override fun onStarted() {
         Toast.makeText(requireContext(), "Login Started", Toast.LENGTH_SHORT).show()
@@ -76,6 +77,10 @@ class LoginFragment : Fragment(), AuthListener {
     }
 
     fun checkUserNamePassword(){
+        /*
+
+
+
         val docRef = db.collection("users").document("$currentUser")
         docRef.addSnapshotListener { snapshot, e ->
             if (e != null) {
@@ -93,7 +98,7 @@ class LoginFragment : Fragment(), AuthListener {
             } else {
                 Log.d("TAG", "$source data: null")
             }
-        }
+        }*/
     }
 
     fun sendPasswordResetEmail(){

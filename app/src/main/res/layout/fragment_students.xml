@@ -22,12 +22,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/student_frag_btn_student_add"
-            app:layout_constraintTop_toBottomOf="@id/student_frag_header"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/renci_ekle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:text="@string/renci_ekle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/student_frag_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

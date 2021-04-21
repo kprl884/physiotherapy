@@ -1,11 +1,14 @@
 package com.example.physiotherapy.view
 
 import android.content.ContentValues
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.example.physiotherapy.R
+import com.example.physiotherapy.databinding.ActivityMainBinding
 import com.example.physiotherapy.view.home.HomeFragment
 import com.example.physiotherapy.view.profile.ProfileFragment
 import com.example.physiotherapy.view.students.StudentsFragment
@@ -27,10 +30,12 @@ class MainActivity : AppCompatActivity() {
     private var refSplashRefCodeBeginTime: DatabaseReference? = null
     private val database = FirebaseDatabase.getInstance()
     private val db = Firebase.firestore
+    lateinit var binding: ActivityMainBinding
+    private var isLoggin = true // TODO : get if user loggin or not and decide begin fragment home or login
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
         when (menuItem.itemId) {
             R.id.navigation_home -> {
-                val fragment = HomeFragment()
+
                 val homeFragment = HomeFragment.newInstance()
                 openFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
@@ -51,9 +56,31 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        setActionBar(binding.toolbarLayout.toolbarLayout)
+        binding.toolbarLayout.toolbarBackBtn.setOnClickListener { onBackPressed() }
+
+        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with (sharedPref.edit()) {
+            putBoolean(getString(R.string.is_user_loggin), isLoggin)
+            apply()
+        }
+
+        val defaultValue = resources.getString((R.string.is_user_loggin_default_false))
+        val status = defaultValue.toBoolean()
+        val logginStatus = sharedPref.getBoolean(getString(R.string.is_user_loggin), status)
+        if (logginStatus) {
+            val homeFragment = HomeFragment.newInstance()
+            openFragment(homeFragment)
+        }
         navigation_bottom.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+        /*
+
+        TODO eğer giriş yapılmışsa home fragmentte başla
+        giriş yapılmamışsa login fragmentle başla
+         */
 
 
         mAuth = FirebaseAuth.getInstance();

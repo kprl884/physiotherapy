@@ -24,4 +24,6 @@
     <string name="home">Anasayfa</string>
     <string name="students">Öğrenciler</string>
     <string name="profile">Profil</string>
+    <string name="is_user_loggin">is user loggin</string>
+    <string name="is_user_loggin_default_false">is user loggin default false</string>
 </resources>

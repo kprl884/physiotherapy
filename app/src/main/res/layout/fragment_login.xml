@@ -15,25 +15,26 @@
         tools:context=".view.auth.login.LoginFragment">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="0dp"
-            android:layout_margin="35dp"
-            android:layout_height="wrap_content"
             android:id="@+id/login_et_userName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="35dp"
             android:hint="@string/username"
             android:text="@={viewmodel.userName}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toTopOf="@id/login_et_password"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/login_et_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="35dp"
-            android:inputType="textPassword"
             android:hint="@string/hint_password"
+            android:inputType="textPassword"
             android:text="@={viewmodel.password}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,22 +51,21 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn_login"
-            android:layout_height="wrap_content"
-
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/giri_yap"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="@id/login_et_password"
-            app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn"
-            />
+            app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn_register"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/kay_t_ol"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintStart_toStartOf="@id/login_et_password"
-            app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn"
-            />
+            app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
 
         <ProgressBar
             android:id="@+id/login_fragment_progress_bar"
