@@ -20,3 +20,8 @@ data class Tag(
      val name: String,
      val colourResId: Int,
 )
+
+data class SelectedStudentSlideModel(
+     val title: String,
+     val imageId : Int
+)

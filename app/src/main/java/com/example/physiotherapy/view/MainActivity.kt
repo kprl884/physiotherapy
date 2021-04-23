@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.ui.AppBarConfiguration
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.ActivityMainBinding
 import com.example.physiotherapy.view.home.HomeFragment
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import java.util.*
 
 
@@ -31,10 +34,10 @@ class MainActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     lateinit var binding: ActivityMainBinding
     private var isLoggin = true // TODO : get if user loggin or not and decide begin fragment home or login
+    /*
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
         when (menuItem.itemId) {
             R.id.navigation_home -> {
-
                 val homeFragment = HomeFragment.newInstance()
                 openFragment(homeFragment)
                 return@OnNavigationItemSelectedListener true
@@ -53,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
+
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -69,11 +74,25 @@ class MainActivity : AppCompatActivity() {
         val defaultValue = resources.getString((R.string.is_user_loggin_default_false))
         val status = defaultValue.toBoolean()
         val logginStatus = sharedPref.getBoolean(getString(R.string.is_user_loggin), status)
+
+        val navController = findNavController(R.id.fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_students,
+                R.id.navigation_profile
+            )
+        )
+        //setupActionBarWithNavController(navController, appBarConfiguration)
+        navigation_bottom.setupWithNavController(navController)
+
         if (logginStatus) {
             val homeFragment = HomeFragment.newInstance()
             openFragment(homeFragment)
         }
-        navigation_bottom.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        //navigation_bottom.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         /*
 

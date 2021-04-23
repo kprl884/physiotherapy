@@ -122,4 +122,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-core:18.0.3'
 
+    //ViewPager 2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
 }
