@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.physiotherapy.R
@@ -14,11 +17,15 @@ import com.example.physiotherapy.model.SelectedStudentSlideModel
 import com.example.physiotherapy.model.Tag
 import com.example.physiotherapy.model.Task
 import com.example.physiotherapy.view.BaseFragment
+import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SelectedStudentTasksFragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class SelectedStudentDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
+    private lateinit var  listOfFragment : ArrayList<Fragment>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,17 +52,33 @@ class SelectedStudentDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewPager2SelectedStudent = binding.selectedStudentPager
+        val tabLayoutSelectedStudent = binding.selectedStudentTabLayout
 
         val list: MutableList<SelectedStudentSlideModel> = ArrayList()
         //drawable klasörünüze 3 adet resim yüklendiğini varsayıyoruz
         //drawable klasörünüze 3 adet resim yüklendiğini varsayıyoruz
-        list.add(SelectedStudentSlideModel("Image Title 1", R.drawable.flag_poland))
-        list.add(SelectedStudentSlideModel("Image Title 2", R.drawable.flag_poland))
-        list.add(SelectedStudentSlideModel("Image Title 3", R.drawable.flag_poland))
+        list.add(SelectedStudentSlideModel(getString(R.string.g_revler), R.drawable.flag_poland))
+        list.add(SelectedStudentSlideModel(getString(R.string.notlar), R.drawable.flag_poland))
+
         binding.selectedStudentPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL;
         binding.selectedStudentPager.adapter = SelectedStudentSlidePagerAdapter(list)
 
-        binding.selectedStudentPager.registerOnPageChangeCallback(object :
+        binding.selectedStudentPager.adapter = SelectedStudentFragmentSlidePagerAdapter(this)
+        binding.selectedStudentPager.currentItem = 1
+        //val adapter = SelectedStudentFragmentSlidePagerAdapter(this)
+        //theVP2InTheMainActivity.adapter = adapter
+        //theVP2InTheMainActivity.setCurrentItem(1)
+
+        TabLayoutMediator(tabLayoutSelectedStudent, viewPager2SelectedStudent) {tab, position ->
+            if (position == 0){
+                tab.text = getString(R.string.g_revler)
+            }else if (position == 1){
+                tab.text = getString(R.string.notlar)
+            }
+        }.attach()
+        /*
+        viewPager2SelectedStudent.registerOnPageChangeCallback(object :
             OnPageChangeCallback() {
             override fun onPageScrolled(
                 position: Int,
@@ -74,6 +97,29 @@ class SelectedStudentDetailFragment : BaseFragment() {
                 super.onPageScrollStateChanged(state)
             }
         })
+
+        */
+
+        /*
+        tabLayoutSelectedStudent.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+
+                Toast.makeText(context, "Tab ${tab?.text} selected", Toast.LENGTH_SHORT).show()
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                Toast.makeText(context, "Tab ${tab?.text} unselected", Toast.LENGTH_SHORT).show()
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                Toast.makeText(context, "Tab ${tab?.text} reselected", Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
+*/
 
 
         /*

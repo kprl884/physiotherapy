@@ -20,7 +20,7 @@ class SelectedStudentSlidePagerAdapter(private val list: List<SelectedStudentSli
     }
 
     override fun onBindViewHolder(holder: SelectedStudentViewHolder, position: Int) {
-        val m: SelectedStudentSlideModel = list!![position]
+        val m: SelectedStudentSlideModel = list[position]
         holder.bind(list[position])
     }
 
