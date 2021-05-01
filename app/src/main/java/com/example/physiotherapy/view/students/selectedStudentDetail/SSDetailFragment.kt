@@ -1,28 +1,22 @@
 package com.example.physiotherapy.view.students.selectedStudentDetail
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentBinding
 import com.example.physiotherapy.model.SelectedStudentSlideModel
 import com.example.physiotherapy.model.Tag
 import com.example.physiotherapy.model.Task
 import com.example.physiotherapy.view.BaseFragment
-import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SelectedStudentTasksFragment
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class SelectedStudentDetailFragment : BaseFragment() {
+class SSDetailFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
     private lateinit var  listOfFragment : ArrayList<Fragment>
@@ -64,7 +58,7 @@ class SelectedStudentDetailFragment : BaseFragment() {
         binding.selectedStudentPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL;
         binding.selectedStudentPager.adapter = SelectedStudentSlidePagerAdapter(list)
 
-        binding.selectedStudentPager.adapter = SelectedStudentFragmentSlidePagerAdapter(this)
+        binding.selectedStudentPager.adapter = SSFragmentSlidePagerAdapter(this)
         binding.selectedStudentPager.currentItem = 1
         //val adapter = SelectedStudentFragmentSlidePagerAdapter(this)
         //theVP2InTheMainActivity.adapter = adapter
@@ -120,8 +114,6 @@ class SelectedStudentDetailFragment : BaseFragment() {
 
         })
 */
-
-
         /*
         binding.selectedStudentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         val adapter = SelectedStudentDetailAdapter(mutableListOf(
@@ -139,6 +131,8 @@ class SelectedStudentDetailFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance() = SelectedStudentDetailFragment()
+        fun newInstance() = SSDetailFragment()
     }
+
+
 }

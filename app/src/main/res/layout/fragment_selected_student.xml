@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         tools:context=".view.profile.ProfileFragment">
 
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/selected_student_tab_layout"
             android:layout_width="match_parent"

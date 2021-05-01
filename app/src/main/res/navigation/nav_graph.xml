@@ -49,7 +49,7 @@
         android:label="AddStudentFragment" />
     <fragment
         android:id="@+id/selectedStudentFragment"
-        android:name="com.example.physiotherapy.view.students.selectedStudentDetail.SelectedStudentDetailFragment"
+        android:name="com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment"
         android:label="SelectedStudentFragment" />
     <fragment
         android:id="@+id/navigation_profile"
