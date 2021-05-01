@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.physiotherapy.R
+import com.example.physiotherapy.foundations.BaseRecyclerAdapter
 import com.example.physiotherapy.model.Task
 import kotlinx.android.synthetic.main.selected_student_task_recyclerview_item.view.*
 
-class SSTaskAdapter(private val tasklist : MutableList<Task> = mutableListOf()): RecyclerView.Adapter<SSTaskViewHolder>() {
+class SSTaskAdapter(taskList : MutableList<Task> = mutableListOf()): BaseRecyclerAdapter<Task>(taskList) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -18,20 +19,12 @@ class SSTaskAdapter(private val tasklist : MutableList<Task> = mutableListOf()):
         return SSTaskViewHolder(lisItem)
     }
 
-    override fun onBindViewHolder(
-        holder: SSTaskViewHolder,
-        position: Int,
-    ) {
-        holder.onBind(tasklist[position], position)
-    }
-
-    override fun getItemCount(): Int = tasklist.size
 }
 
-class SSTaskViewHolder(val view: View) : RecyclerView.ViewHolder(view){
-    fun onBind(task: Task, position: Int) {
-        view.task_rv_item_task_name.text = task.title
+class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Task>(view){
+    override fun onBind(data: Task, position: Int) {
         view.task_rv_item_task_id.text = position.toString()
+        view.task_rv_item_task_name.text = data.title
     }
 }
 
