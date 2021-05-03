@@ -11,6 +11,7 @@ import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentTasksBinding
 import com.example.physiotherapy.databinding.FragmentStudentsBinding
 import com.example.physiotherapy.model.Task
+import com.example.physiotherapy.model.Todo
 
 
 class SSTasksFragment : Fragment() {
@@ -38,7 +39,9 @@ class SSTasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.selectedStudentTaskRecyclerView.layoutManager = LinearLayoutManager(context)
-        var taskList = mutableListOf<Task>(Task("task 1"),
+        var taskList = mutableListOf<Task>(Task("task 1", mutableListOf(
+         Todo("test todo 1", true), Todo("test todo 2")
+        )),
         Task("task 2"))
         val ssTaskAdapter = SSTaskAdapter(taskList)
         binding.selectedStudentTaskRecyclerView.adapter = ssTaskAdapter

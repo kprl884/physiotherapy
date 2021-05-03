@@ -4,30 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/ss_task_textView"
+    <CheckBox
+        android:id="@+id/ss_complete_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:padding="3dp"
-        android:text="01"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <LinearLayout
-
-        app:layout_constraintTop_toBottomOf="@id/ss_task_textView"
-        app:layout_constraintStart_toStartOf="parent"
+    <TextView
+        android:id="@+id/ss_description_view"
+        app:layout_constraintStart_toEndOf="@id/ss_complete_checkbox"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/task_item_todo_container"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="description"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toTopOf="@id/ss_complete_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/ss_complete_checkbox"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout>
+        android:layout_height="wrap_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

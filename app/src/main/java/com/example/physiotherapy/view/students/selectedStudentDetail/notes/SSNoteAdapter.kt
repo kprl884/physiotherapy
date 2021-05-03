@@ -23,7 +23,6 @@ class SSNoteAdapter(noteList : MutableList<Note> = mutableListOf()): BaseRecycle
 
     class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view){
         override fun onBind(data: Note, position: Int) {
-            view.note_rv_item_note_id.text = position.toString()
-            view.note_rv_item_note_name.text = data.description
+            view.note_item_description.text = data.description
         }
     }
