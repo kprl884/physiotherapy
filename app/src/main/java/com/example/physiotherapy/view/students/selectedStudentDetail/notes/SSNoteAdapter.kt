@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.example.physiotherapy.R
 import com.example.physiotherapy.foundations.BaseRecyclerAdapter
 import com.example.physiotherapy.model.Note
+import com.example.physiotherapy.view.views.NoteView
 import kotlinx.android.synthetic.main.selected_student_note_recyclerview_item.view.*
 
 
@@ -23,6 +24,6 @@ class SSNoteAdapter(noteList : MutableList<Note> = mutableListOf()): BaseRecycle
 
     class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view){
         override fun onBind(data: Note, position: Int) {
-            view.note_item_description.text = data.description
+            (view as NoteView).initView(data)
         }
     }

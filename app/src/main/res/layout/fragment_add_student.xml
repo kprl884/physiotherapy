@@ -24,7 +24,7 @@
             app:layout_constraintBottom_toTopOf="@id/add_student_et_name"
             app:srcCompat="@drawable/com_facebook_profile_picture_blank_portrait" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/add_student_et_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_student_iv_student_photo" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/add_student_et_last_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_student_et_name" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/add_student_et_phone_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@id/add_student_et_last_name" />
 
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/add_student_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
             app:layout_constraintStart_toStartOf="@id/add_student_et_phone_number"
             app:layout_constraintTop_toBottomOf="@id/add_student_et_phone_number" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/add_student_btn_add_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
