@@ -14,15 +14,15 @@ class SSNoteAdapter(noteList : MutableList<Note> = mutableListOf()): BaseRecycle
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int,
-        ): SSTaskViewHolder {
+        ): SSNoteViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val lisItem : View = layoutInflater.inflate(R.layout.selected_student_note_recyclerview_item, parent, false)
-            return SSTaskViewHolder(lisItem)
+            return SSNoteViewHolder(lisItem)
         }
 
     }
 
-    class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view){
+    class SSNoteViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view){
         override fun onBind(data: Note, position: Int) {
             (view as NoteView).initView(data)
         }

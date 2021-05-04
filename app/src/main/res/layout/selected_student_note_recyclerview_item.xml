@@ -4,13 +4,11 @@
     android:layout_height="128dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
-    <TextView
+    <EditText
         android:id="@+id/note_item_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="note 1"
+        android:hint="note 1"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
