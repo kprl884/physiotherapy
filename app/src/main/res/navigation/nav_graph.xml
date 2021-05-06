@@ -50,10 +50,38 @@
     <fragment
         android:id="@+id/selectedStudentFragment"
         android:name="com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment"
-        android:label="SelectedStudentFragment" />
+        android:label="SelectedStudentFragment" >
+        <action
+            android:id="@+id/action_selectedStudentFragment_to_SSTasksFragment"
+            app:destination="@id/SSTasksFragment" />
+        <action
+            android:id="@+id/action_selectedStudentFragment_to_SSNotesFragment"
+            app:destination="@id/SSNotesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.physiotherapy.view.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/SSTasksFragment"
+        android:name="com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment"
+        android:label="SSTasksFragment" >
+        <action
+            android:id="@+id/action_SSTasksFragment_to_createFragment"
+            app:destination="@id/createFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/SSNotesFragment"
+        android:name="com.example.physiotherapy.view.students.selectedStudentDetail.notes.SSNotesFragment"
+        android:label="SSNotesFragment" >
+        <action
+            android:id="@+id/action_SSNotesFragment_to_createFragment"
+            app:destination="@id/createFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createFragment"
+        android:name="com.example.physiotherapy.create.CreateFragment"
+        android:label="fragment_create"
+        tools:layout="@layout/fragment_create" />
 </navigation>

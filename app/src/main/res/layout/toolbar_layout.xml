@@ -17,7 +17,7 @@
         android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="40sp"
-        android:background="@color/colorWhite"
+        android:background="@color/white"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="2sp"
-                android:background="@color/colorWhite"
+                android:background="@color/white"
               android:padding="4sp"
                 android:scaleType="fitXY"
                 android:visibility="gone"

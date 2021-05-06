@@ -6,8 +6,9 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="lightGrey">#DFDFDF</color>
     <color name="my_background_color">#FFFFFF</color>
     <color name="bottom_nav_text_color">#3F51B5</color>
     <color name="bottom_nav_item_color">#3F51B5</color>

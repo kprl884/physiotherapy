@@ -25,7 +25,7 @@ import androidx.navigation.ui.setupWithNavController
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     private var refSplashRefUser: DatabaseReference? = null
     private var refSplashRefUserType: DatabaseReference? = null

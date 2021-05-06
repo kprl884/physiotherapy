@@ -16,7 +16,7 @@ import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTas
 import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment
 
 
-class SelectedStudentNotesFragment : Fragment() {
+class SSNotesFragment : Fragment() {
     //private lateinit var binding: FragmentSelectedStudentTasksBinding
     private lateinit var binding: FragmentSelectedStudentNotesBinding
 
