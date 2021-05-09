@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,23 +18,9 @@ import com.example.physiotherapy.model.Todo
 import com.example.physiotherapy.view.students.selectedStudentDetail.TouchActionDelegate
 
 
-class SSTasksFragment : Fragment(), TouchActionDelegate {
+class SSTasksFragment : Fragment() {
     private lateinit var binding: FragmentSelectedStudentTasksBinding
-    private var param1: String? = null
-    private var param2: String? = null
-
-    lateinit var touchActionDelegate: TouchActionDelegate
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        context.let {
-
-            if (it is TouchActionDelegate) {
-                touchActionDelegate = it
-            }
-
-        }
-    }
+    lateinit var taskViewModel: SSTaskViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,22 +39,25 @@ class SSTasksFragment : Fragment(), TouchActionDelegate {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        bindViewModel()
+
         binding.selectedStudentTaskRecyclerView.layoutManager = LinearLayoutManager(context)
-        var taskList = mutableListOf<Task>(Task("task 1", mutableListOf(
-            Todo("test todo 1", true), Todo("test todo 2")
-        )),
-            Task("task 2"))
-        val ssTaskAdapter = SSTaskAdapter(taskList, touchActionDelegate)
+        var taskList = taskViewModel.getFakeData()
+        val ssTaskAdapter = SSTaskAdapter(taskList) { onAddButtonClicked() }
         binding.selectedStudentTaskRecyclerView.adapter = ssTaskAdapter
+    }
+
+    private fun bindViewModel(){
+        taskViewModel = ViewModelProvider(this).get(SSTaskViewModel::class.java)
     }
 
     companion object {
         fun newInstance() = SSTasksFragment()
     }
 
-    override fun onAddButtonClicked() {
+    private fun onAddButtonClicked() {
         NavHostFragment.findNavController(this).navigate(
-            R.id.action_SSTasksFragment_to_createFragment,
+            R.id.action_selectedStudentFragment_to_createFragment,
             null,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {

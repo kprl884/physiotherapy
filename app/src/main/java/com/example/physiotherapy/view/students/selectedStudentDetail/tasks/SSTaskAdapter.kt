@@ -7,15 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.physiotherapy.R
 import com.example.physiotherapy.foundations.BaseRecyclerAdapter
 import com.example.physiotherapy.model.Task
-import com.example.physiotherapy.view.students.selectedStudentDetail.TouchActionDelegate
 import com.example.physiotherapy.view.views.TaskView
 import kotlinx.android.synthetic.main.view_add_button.view.*
 
 class SSTaskAdapter(
     taskList: MutableList<Task> = mutableListOf(),
-    val touchActionDelegate: TouchActionDelegate,
+    touchActionDelegate: () -> Unit,
 ) :
-    BaseRecyclerAdapter<Task>(taskList) {
+    BaseRecyclerAdapter<Task>(taskList, touchActionDelegate) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -30,16 +29,18 @@ class SSTaskAdapter(
         }
 
     inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
-        override fun onBind(data: Unit, position: Int) {
+        override fun onBind(data: Unit, position: Int, touchActionDelegate: (() -> Unit)?) {
             view.buttonText.text = view.context.getString(R.string.add_new_task)
             view.setOnClickListener {
-                touchActionDelegate.onAddButtonClicked()
+                if (touchActionDelegate != null) {
+                    touchActionDelegate()
+                }
             }
         }
     }
 
     class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Task>(view) {
-        override fun onBind(data: Task, position: Int) {
+        override fun onBind(data: Task, position: Int, touchActionDelegate: (() -> Unit)?) {
             (view as TaskView).initView(data)
         }
     }

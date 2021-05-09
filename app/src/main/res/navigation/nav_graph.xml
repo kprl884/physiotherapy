@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_selectedStudentFragment_to_SSNotesFragment"
             app:destination="@id/SSNotesFragment" />
+        <action
+            android:id="@+id/action_selectedStudentFragment_to_createFragment"
+            app:destination="@id/createFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"

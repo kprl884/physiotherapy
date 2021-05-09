@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class
 BaseRecyclerAdapter<T>(
-    protected val masterList: MutableList<T> = mutableListOf()
+    protected val masterList: MutableList<T> = mutableListOf(),
+    protected val touchActionDelegate: (() -> Unit)?
 ):  RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun getItemViewType(position: Int): Int = if (position == 0) {
@@ -16,7 +17,7 @@ BaseRecyclerAdapter<T>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AddButtonViewHolder){
-            holder.onBind(Unit, position)
+            holder.onBind(Unit, position, touchActionDelegate)
         }
        else {
             (holder as BaseViewHolder<T>).onBind(masterList[position - 1], position)
@@ -30,7 +31,7 @@ BaseRecyclerAdapter<T>(
 
 
     abstract class BaseViewHolder<E>(val view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun onBind(data: E, position: Int)
+        abstract fun onBind(data: E, position: Int, touchActionDelegate: (() -> Unit)? =null)
     }
 
     companion object {
