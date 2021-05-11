@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.physiotherapy.R
 import com.example.physiotherapy.model.Todo
+import kotlinx.android.synthetic.main.selected_student_task_recyclerview_item.view.*
 import kotlinx.android.synthetic.main.selected_student_view_todo.view.*
 
 
@@ -26,7 +27,7 @@ class TodoView @JvmOverloads constructor(
         descriptionView!!.text = todo.description
         checkBox!!.isChecked = todo.isComplete
         if (todo.isComplete) {
-            createStrikeThrough()
+            ss_description_view.setStrikeThrough()
         }
         setUpCheckStateListener(todo, callback)
     }
@@ -36,26 +37,13 @@ class TodoView @JvmOverloads constructor(
             todo.isComplete = isChecked
             callback?.invoke(isChecked)
             if (isChecked) {
-                createStrikeThrough()
+                ss_description_view.setStrikeThrough()
             } else {
-                removeStrikeThrough()
+                ss_description_view.removeStrikeThrough()
             }
         }
     }
 
-    private fun removeStrikeThrough() {
-        ss_description_view.apply {
-            paintFlags = paintFlags and
-                    Paint.STRIKE_THRU_TEXT_FLAG.inv()
-        }
-    }
-
-    private fun createStrikeThrough() {
-        ss_description_view.apply {
-            paintFlags = paintFlags or
-                    Paint.STRIKE_THRU_TEXT_FLAG
-        }
-    }
 
 
 }
