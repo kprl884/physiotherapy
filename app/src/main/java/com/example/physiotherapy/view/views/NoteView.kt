@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.Editable
 import android.util.AttributeSet
 import android.widget.EditText
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.physiotherapy.R
 import com.example.physiotherapy.model.Note

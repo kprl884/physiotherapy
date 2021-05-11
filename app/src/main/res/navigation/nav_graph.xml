@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/createFragment"
-        android:name="com.example.physiotherapy.create.CreateFragment"
+        android:name="com.example.physiotherapy.view.students.create.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
 </navigation>

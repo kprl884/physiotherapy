@@ -4,10 +4,16 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class
-BaseRecyclerAdapter<T>(
+BaseRecyclerAdapter<T> (
     protected val masterList: MutableList<T> = mutableListOf(),
     protected val touchActionDelegate: (() -> Unit)?
 ):  RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
+    fun updateList(list: Collection<T>){
+        masterList.clear()
+        masterList.addAll(list)
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int = if (position == 0) {
         TYPE_ADD_BUTTON
@@ -17,10 +23,10 @@ BaseRecyclerAdapter<T>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AddButtonViewHolder){
-            holder.onBind(Unit, position, touchActionDelegate)
+            holder.onBind(Unit, position, touchActionDelegate, position-1)
         }
        else {
-            (holder as BaseViewHolder<T>).onBind(masterList[position - 1], position)
+            (holder as BaseViewHolder<T>).onBind(masterList[position - 1], position, null,position-1)
         }
 
     }
@@ -31,7 +37,7 @@ BaseRecyclerAdapter<T>(
 
 
     abstract class BaseViewHolder<E>(val view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun onBind(data: E, position: Int, touchActionDelegate: (() -> Unit)? =null)
+        abstract fun onBind(data: E, position: Int, touchActionDelegate: (() -> Unit)? =null, listIndex :Int)
     }
 
     companion object {

@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.view_add_button.view.*
 class SSTaskAdapter(
     taskList: MutableList<Task> = mutableListOf(),
     touchActionDelegate: () -> Unit,
+    val dataDelegate: SSTaskListViewContract
 ) :
     BaseRecyclerAdapter<Task>(taskList, touchActionDelegate) {
 
@@ -29,7 +30,12 @@ class SSTaskAdapter(
         }
 
     inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
-        override fun onBind(data: Unit, position: Int, touchActionDelegate: (() -> Unit)?) {
+        override fun onBind(
+            data: Unit,
+            position: Int,
+            touchActionDelegate: (() -> Unit)?,
+            listIndex: Int
+        ) {
             view.buttonText.text = view.context.getString(R.string.add_new_task)
             view.setOnClickListener {
                 if (touchActionDelegate != null) {
@@ -39,9 +45,16 @@ class SSTaskAdapter(
         }
     }
 
-    class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Task>(view) {
-        override fun onBind(data: Task, position: Int, touchActionDelegate: (() -> Unit)?) {
-            (view as TaskView).initView(data)
+    inner class SSTaskViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Task>(view) {
+        override fun onBind(
+            data: Task,
+            position: Int,
+            touchActionDelegate: (() -> Unit)?,
+            listIndex: Int
+        ) {
+            (view as TaskView).initView(data) {todoIndex, isChecked ->
+                dataDelegate.onTodoUpdated(listIndex, todoIndex, isChecked)
+            }
         }
     }
 

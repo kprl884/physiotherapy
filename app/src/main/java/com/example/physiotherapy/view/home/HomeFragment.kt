@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentHomeBinding
 import com.example.physiotherapy.view.BaseFragment

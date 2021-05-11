@@ -1,13 +1,21 @@
 package com.example.physiotherapy.view.students.selectedStudentDetail.tasks
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.physiotherapy.model.Task
-import com.example.physiotherapy.model.Todo
 
-class SSTaskViewModel : ViewModel() {
-    fun getFakeData(): MutableList<Task> = mutableListOf<Task>(
-        Task("task 1", mutableListOf(
-        Todo("test todo 1", true), Todo("test todo 2"))),
-        Task("task 2"),
-        Task("task three", mutableListOf(Todo("test todo A"), Todo("test todoB"))))
+class SSTaskViewModel : ViewModel(), SSTaskListViewContract{
+
+    private val model: Taskmodel = Taskmodel()
+    private val _taskListLiveData: MutableLiveData<MutableList<Task>> = MutableLiveData()
+    val taskListLiveData : LiveData<MutableList<Task>> = _taskListLiveData
+
+    init {
+        _taskListLiveData   .postValue(model.getFakeData())
+    }
+
+    override fun onTodoUpdated(taskIndex: Int, todoIndex: Int, isComplete: Boolean) {
+        _taskListLiveData.value?.get(taskIndex)?.todos?.get(todoIndex)?.isComplete = isComplete
+    }
 }

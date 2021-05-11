@@ -8,24 +8,26 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.physiotherapy.R
 import com.example.physiotherapy.model.Task
 import kotlinx.android.synthetic.main.selected_student_task_recyclerview_item.view.*
-import kotlinx.android.synthetic.main.selected_student_view_todo.view.*
 
 class TaskView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStlyeAttr: Int = 1,
-) : ConstraintLayout(context, attrs, defStlyeAttr)  {
-    lateinit var task : Task
-    fun initView (task: Task){
+) : ConstraintLayout(context, attrs, defStlyeAttr) {
+    lateinit var task: Task
+    fun initView(task: Task, todoIndexCallback: (Int, Boolean) -> Unit) {
         this.task = task
         ss_task_textView.text = task.title
-        task.todos.forEach {todo->
-            val todoView = (LayoutInflater.from(context).inflate(R.layout.selected_student_view_todo,
-                task_item_todo_container, false) as TodoView).apply {
-                initView(todo) {
-                    if(isTaskComplete()){
+        task.todos.forEachIndexed { index, todo ->
+            val todoView = (LayoutInflater.from(context).inflate(
+                R.layout.selected_student_view_todo,
+                task_item_todo_container, false
+            ) as TodoView).apply {
+                initView(todo) { isChecked ->
+                    todoIndexCallback.invoke(index, isChecked)
+                    if (isTaskComplete()) {
                         createStrikeThrough()
-                    }else {
+                    } else {
                         removeStrikeThrough()
                     }
                 }
@@ -34,7 +36,7 @@ class TaskView @JvmOverloads constructor(
         }
     }
 
-    private fun isTaskComplete() :Boolean = task.todos. filter {!it.isComplete }.isEmpty()
+    private fun isTaskComplete(): Boolean = task.todos.filter { !it.isComplete }.isEmpty()
 
     private fun removeStrikeThrough() {
         ss_task_textView.apply {

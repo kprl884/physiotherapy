@@ -6,13 +6,12 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.ActivityMainBinding
 import com.example.physiotherapy.view.home.HomeFragment
-import com.example.physiotherapy.view.profile.ProfileFragment
-import com.example.physiotherapy.view.students.StudentsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -20,9 +19,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import java.util.*
 
 
 class  MainActivity : AppCompatActivity() {

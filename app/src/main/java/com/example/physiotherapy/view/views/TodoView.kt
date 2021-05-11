@@ -19,7 +19,8 @@ class TodoView @JvmOverloads constructor(
     private var descriptionView: TextView? = null
     private var checkBox: CheckBox? = null
 
-    fun initView(todo: Todo, callback: (() -> Unit)? = null) {
+    fun initView(todo: Todo, callback: ((Boolean) -> Unit)? = null) {
+
         descriptionView = findViewById(R.id.ss_description_view)
         checkBox = findViewById(R.id.ss_complete_checkbox)
         descriptionView!!.text = todo.description
@@ -30,10 +31,10 @@ class TodoView @JvmOverloads constructor(
         setUpCheckStateListener(todo, callback)
     }
 
-    private fun setUpCheckStateListener(todo:Todo, callback: (() -> Unit)? = null) {
+    private fun setUpCheckStateListener(todo:Todo, callback: ((Boolean) -> Unit)? = null) {
         checkBox?.setOnCheckedChangeListener { _, isChecked ->
             todo.isComplete = isChecked
-            callback?.invoke()
+            callback?.invoke(isChecked)
             if (isChecked) {
                 createStrikeThrough()
             } else {

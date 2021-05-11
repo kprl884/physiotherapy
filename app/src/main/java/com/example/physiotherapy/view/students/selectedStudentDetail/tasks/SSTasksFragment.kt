@@ -1,54 +1,51 @@
 package com.example.physiotherapy.view.students.selectedStudentDetail.tasks
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentTasksBinding
-import com.example.physiotherapy.model.Task
-import com.example.physiotherapy.model.Todo
-import com.example.physiotherapy.view.students.selectedStudentDetail.TouchActionDelegate
 
 
 class SSTasksFragment : Fragment() {
     private lateinit var binding: FragmentSelectedStudentTasksBinding
     lateinit var taskViewModel: SSTaskViewModel
-
+    lateinit var contentView: SSTaskListView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_selected_student_tasks,
-            container,
-            false)
 
-
-        return binding.root
+        return inflater.inflate(R.layout.fragment_selected_student_tasks, container, false).apply {
+            contentView = this as SSTaskListView
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindViewModel()
-
-        binding.selectedStudentTaskRecyclerView.layoutManager = LinearLayoutManager(context)
-        var taskList = taskViewModel.getFakeData()
-        val ssTaskAdapter = SSTaskAdapter(taskList) { onAddButtonClicked() }
-        binding.selectedStudentTaskRecyclerView.adapter = ssTaskAdapter
+        setContentView()
     }
 
-    private fun bindViewModel(){
+    private fun setContentView() {
+        contentView.initView({ onAddButtonClicked() }, taskViewModel)
+    }
+
+    private fun bindViewModel() {
         taskViewModel = ViewModelProvider(this).get(SSTaskViewModel::class.java)
+
+        taskViewModel.taskListLiveData.observe(viewLifecycleOwner, Observer { taskList ->
+            //Update the adapter
+            contentView.updateList(taskList)
+        })
     }
 
     companion object {

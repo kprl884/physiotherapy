@@ -8,20 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
 import com.example.physiotherapy.view.BaseFragment
 import com.example.physiotherapy.view.auth.AuthListener
-import com.example.physiotherapy.viewmodel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
