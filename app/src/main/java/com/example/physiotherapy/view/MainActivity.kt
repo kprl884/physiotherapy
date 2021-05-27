@@ -11,7 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.ActivityMainBinding
-import com.example.physiotherapy.view.home.HomeFragment
+import com.example.physiotherapy.view.auth.login.LoginFragment
+import com.example.physiotherapy.view.auth.register.RegisterFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -21,39 +22,16 @@ import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class  MainActivity : AppCompatActivity() {
-    private var mAuth: FirebaseAuth? = null
+class MainActivity : AppCompatActivity() {
+    private lateinit var mAuth: FirebaseAuth
     private var refSplashRefUser: DatabaseReference? = null
     private var refSplashRefUserType: DatabaseReference? = null
     private var refSplashRefCodeBeginTime: DatabaseReference? = null
     private val database = FirebaseDatabase.getInstance()
     private val db = Firebase.firestore
     lateinit var binding: ActivityMainBinding
-    private var isLoggin = true // TODO : get if user loggin or not and decide begin fragment home or login
-    /*
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-        when (menuItem.itemId) {
-            R.id.navigation_home -> {
-                val homeFragment = HomeFragment.newInstance()
-                openFragment(homeFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_students -> {
-                val studentsFragment = StudentsFragment.newInstance()
-                openFragment(studentsFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_profile -> {
-                val profileFragment = ProfileFragment.newInstance()
-                openFragment(profileFragment)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
+    private var isLogin: Boolean = false
 
-
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -61,19 +39,27 @@ class  MainActivity : AppCompatActivity() {
         setActionBar(binding.toolbarLayout.toolbarLayout)
         binding.toolbarLayout.toolbarBackBtn.setOnClickListener { onBackPressed() }
 
+        mAuth = FirebaseAuth.getInstance()
+
+        Firebase.initialize(this)
+        val database = FirebaseDatabase.getInstance()
+        refSplashRefUser = database.getReference("users")
+
+
         val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with(sharedPref.edit()) {
-            putBoolean(getString(R.string.is_user_loggin), isLoggin)
+            putBoolean(getString(R.string.is_user_loggin), isLogin)
             apply()
         }
 
         val defaultValue = resources.getString((R.string.is_user_loggin_default_false))
         val status = defaultValue.toBoolean()
-        val logginStatus = sharedPref.getBoolean(getString(R.string.is_user_loggin), status)
+        //val loggingStatus = sharedPref.getBoolean(getString(R.string.is_user_loggin), status)
 
-        val navController = findNavController(R.id.fragment)
+        val navController = findNavController(R.id.navigation_fragment)
         // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        // menu should be considered as top level destinations.?
+
         AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -81,26 +67,14 @@ class  MainActivity : AppCompatActivity() {
                 R.id.navigation_profile
             )
         )
-        //setupActionBarWithNavController(navController, appBarConfiguration)
+
         navigation_bottom.setupWithNavController(navController)
-
-        if (logginStatus) {
-            val homeFragment = HomeFragment.newInstance()
-            openFragment(homeFragment)
+        val currentUser = mAuth.currentUser
+        if (currentUser == null) {
+            val loginFragment = LoginFragment.newInstance()
+            openFragment(loginFragment)
         }
-        //navigation_bottom.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-        /*
-
-        TODO eğer giriş yapılmışsa home fragmentte başla
-        giriş yapılmamışsa login fragmentle başla
-         */
-
-
-        mAuth = FirebaseAuth.getInstance();
-        Firebase.initialize(this)
-        val database = FirebaseDatabase.getInstance()
-        refSplashRefUser = database.getReference("users")
 
         val user = hashMapOf(
             "first" to "Ada",
@@ -121,7 +95,7 @@ class  MainActivity : AppCompatActivity() {
          */
 
 
-        val a =db.collection("users")
+        val a = db.collection("users")
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
@@ -132,34 +106,25 @@ class  MainActivity : AppCompatActivity() {
                 Log.w("TAG", "Error getting documents.", exception)
             }
     }
+
     private fun openFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment, fragment)
+        transaction.replace(R.id.main_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
 
-    override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = mAuth!!.currentUser
-        //updateUI(currentUser)
-    }
 
     private fun registerUser(userId: String) {
         val refSplashRefUser: DatabaseReference?
         val database = FirebaseDatabase.getInstance()
         refSplashRefUser = database.getReference("users")
-        refSplashRefUser.child(userId).
-        child("user_name").setValue("alparslan")
+        refSplashRefUser.child(userId).child("user_name").setValue("alparslan")
 
-        refSplashRefUser.child(userId).
-        child("user_surname").setValue("köprülü")
+        refSplashRefUser.child(userId).child("user_surname").setValue("köprülü")
 
-        refSplashRefUser.child(userId).
-        child("user_nick").setValue("alprsnk")
+        refSplashRefUser.child(userId).child("user_nick").setValue("alprsnk")
 
-        refSplashRefUser.child(userId).
-        child("user_password").setValue("123456")
+        refSplashRefUser.child(userId).child("user_password").setValue("123456")
     }
 }

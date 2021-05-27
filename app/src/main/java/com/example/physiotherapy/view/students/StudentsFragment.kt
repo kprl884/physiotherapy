@@ -12,17 +12,19 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentStudentsBinding
+import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.model.Student
-import com.example.physiotherapy.view.BaseFragment
 
 
 class StudentsFragment : BaseFragment() {
     private lateinit var binding: FragmentStudentsBinding
-    val studentList = listOf(Student("Alparslan", "Köprülü", "alprslnk", "123456", 1),
+    private val studentList = listOf(
+        Student("Alparslan", "Köprülü", "alprslnk", "123456", 1),
         Student("Bera", "Gelebek", "beraglk", "123456", 2),
         Student("mustafa", "seki", "mstfsk", "123456", 3),
         Student("kedi", "ak", "kdrak", "123456", 4),
-        Student("enes", "güreli", "enesgrl", "123456", 5))
+        Student("enes", "güreli", "enesgrl", "123456", 5)
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +59,6 @@ class StudentsFragment : BaseFragment() {
         fun newInstance(): StudentsFragment = StudentsFragment()
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 
     private fun setRecyclerView() {
         binding.apply {

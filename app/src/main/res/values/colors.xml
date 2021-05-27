@@ -12,6 +12,7 @@
     <color name="my_background_color">#FFFFFF</color>
     <color name="bottom_nav_text_color">#3F51B5</color>
     <color name="bottom_nav_item_color">#3F51B5</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
 

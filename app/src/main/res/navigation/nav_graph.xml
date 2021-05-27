@@ -9,13 +9,13 @@
         android:id="@+id/navigation_home"
         android:name="com.example.physiotherapy.view.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
 
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.physiotherapy.view.auth.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/navigation_home" />
@@ -27,15 +27,18 @@
         android:id="@+id/registerFragment"
         android:name="com.example.physiotherapy.view.auth.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_students"
         android:name="com.example.physiotherapy.view.students.StudentsFragment"
-        android:label="StudentsFragment" >
+        android:label="StudentsFragment">
         <action
             android:id="@+id/action_studentsFragment_to_addStudentFragment"
             app:destination="@id/addStudentFragment" />
@@ -50,7 +53,7 @@
     <fragment
         android:id="@+id/selectedStudentFragment"
         android:name="com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment"
-        android:label="SelectedStudentFragment" >
+        android:label="SelectedStudentFragment">
         <action
             android:id="@+id/action_selectedStudentFragment_to_SSTasksFragment"
             app:destination="@id/SSTasksFragment" />
@@ -60,6 +63,9 @@
         <action
             android:id="@+id/action_selectedStudentFragment_to_createFragment"
             app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_selectedStudentFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
@@ -69,7 +75,7 @@
     <fragment
         android:id="@+id/SSTasksFragment"
         android:name="com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment"
-        android:label="SSTasksFragment" >
+        android:label="SSTasksFragment">
         <action
             android:id="@+id/action_SSTasksFragment_to_createFragment"
             app:destination="@id/createFragment" />
@@ -77,14 +83,37 @@
     <fragment
         android:id="@+id/SSNotesFragment"
         android:name="com.example.physiotherapy.view.students.selectedStudentDetail.notes.SSNotesFragment"
-        android:label="SSNotesFragment" >
+        android:label="SSNotesFragment">
         <action
             android:id="@+id/action_SSNotesFragment_to_createFragment"
             app:destination="@id/createFragment" />
+        <action
+            android:id="@+id/action_SSNotesFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
     </fragment>
     <fragment
         android:id="@+id/createFragment"
         android:name="com.example.physiotherapy.view.students.create.CreateFragment"
         android:label="fragment_create"
         tools:layout="@layout/fragment_create" />
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.example.physiotherapy.view.students.create.CreateNoteFragment"
+        android:label="CreateNoteFragment" >
+        <action
+            android:id="@+id/action_createNoteFragment_to_selectedStudentFragment"
+            app:destination="@id/selectedStudentFragment" />
+        <action
+            android:id="@+id/action_createNoteFragment_to_SSNotesFragment"
+            app:destination="@id/SSNotesFragment" />
+        <argument
+            android:name="newNote"
+            app:argType="com.example.physiotherapy.model.Note"
+            app:nullable="true" />
+        <argument
+            android:name="ss"
+            app:argType="string" />
+    </fragment>
+
+
 </navigation>

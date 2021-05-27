@@ -12,12 +12,16 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentTasksBinding
+import com.example.physiotherapy.foundations.BaseFragment
+import com.example.physiotherapy.view.MainActivity
+import com.example.physiotherapy.view.students.selectedStudentDetail.notes.SSNotesFragment
 
 
-class SSTasksFragment : Fragment() {
+class SSTasksFragment : BaseFragment() {
     private lateinit var binding: FragmentSelectedStudentTasksBinding
     lateinit var taskViewModel: SSTaskViewModel
     lateinit var contentView: SSTaskListView
+    var TAG: String = SSTasksFragment::class.java.simpleName
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -33,6 +37,12 @@ class SSTasksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindViewModel()
         setContentView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setToolbarVisibility(getString(R.string.app_name), View.GONE, TAG)
+
     }
 
     private fun setContentView() {
@@ -54,7 +64,7 @@ class SSTasksFragment : Fragment() {
 
     private fun onAddButtonClicked() {
         NavHostFragment.findNavController(this).navigate(
-            R.id.action_selectedStudentFragment_to_createFragment,
+            R.id.action_selectedStudentFragment_to_createNoteFragment,
             null,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {

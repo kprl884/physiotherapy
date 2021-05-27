@@ -29,6 +29,7 @@ class SSTaskAdapter(
                 .inflate(R.layout.view_add_button, parent, false))
         }
 
+
     inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
         override fun onBind(
             data: Unit,

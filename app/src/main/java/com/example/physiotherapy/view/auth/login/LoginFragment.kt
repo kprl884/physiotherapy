@@ -8,53 +8,65 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.fragment.NavHostFragment.findNavController
-import androidx.navigation.navOptions
+import androidx.fragment.app.Fragment
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
-import com.example.physiotherapy.view.BaseFragment
+import com.example.physiotherapy.view.MainFragment
 import com.example.physiotherapy.view.auth.AuthListener
+import com.example.physiotherapy.view.auth.register.RegisterFragment
+import com.example.physiotherapy.view.home.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
-class LoginFragment : BaseFragment(), AuthListener {
-    private lateinit var binding:FragmentLoginBinding
-    private var userPassword:String = ""
-    private var userName:String = ""
-    private var mAuth: FirebaseAuth? = null
-
-
+class LoginFragment : Fragment(), AuthListener {
+    private lateinit var binding: FragmentLoginBinding
+    private lateinit var enteredPassword: String
+    private lateinit var enteredMail: String
+    private val fragmentName: String = LoginFragment::class.java.simpleName
+    private lateinit var auth: FirebaseAuth
+    private var isLogin: Boolean? = null
+    private val mainFragment = MainFragment.newInstance()
+    private val homeFragment = HomeFragment.newInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
-        mAuth = FirebaseAuth.getInstance();
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+
+        auth = FirebaseAuth.getInstance()
+
+        isLogin = arguments?.getParcelable("isLogin")
 
         //val userRecord: UserRecord = FirebaseAuth.getInstance().getUser(uid)
 
         binding.loginBtnLogin.setOnClickListener {
-            Log.d("alp","login basildi")
-            findNavController(this).navigate(
-                R.id.action_loginFragment_to_homeFragment,
-                null,
-                navOptions { // Use the Kotlin DSL for building NavOptions
-                    anim {
-                        enter = android.R.animator.fade_in
-                        exit = android.R.animator.fade_out
-                    }
-                }
-            )
+            enteredPassword = binding.loginEtPassword.editableText.toString()
+            enteredMail = binding.loginEtUserMail.editableText.toString()
+
+            if (enteredPassword.isEmpty() || enteredMail.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    "Şifre veya mail boş bırakılamaz. Lütfen tekrar deneyiniz.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                signWithMailPassword(enteredMail, enteredPassword)
+            }
+        }
+
+        binding.loginBtnRegister.setOnClickListener {
+            val registerFragment = RegisterFragment.newInstance()
+            openFragment(registerFragment)
         }
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        setToolbarVisibility(getString(R.string.app_name), View.GONE)
+        //setToolbarVisibility(getString(R.string.app_name), View.GONE, fragmentName)
     }
 
     override fun onStarted() {
@@ -70,7 +82,27 @@ class LoginFragment : BaseFragment(), AuthListener {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    fun checkUserNamePassword(){
+
+    private fun signWithMailPassword(mail: String, password: String) {
+        auth.signInWithEmailAndPassword(mail, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                //Signed
+                openHomeFragment(newInstance(), homeFragment)
+            }
+
+        }.addOnFailureListener {
+            it.let {
+                Toast.makeText(
+                    context,
+                    "Giriş yaparken hata oluştu, lütfen tekrar deneyiniz.",
+                    Toast.LENGTH_LONG
+                ).show()
+                Log.e("alp", it.localizedMessage)
+            }
+        }
+    }
+
+    fun checkUserNamePassword() {
         /*
 
 
@@ -95,7 +127,26 @@ class LoginFragment : BaseFragment(), AuthListener {
         }*/
     }
 
-    fun sendPasswordResetEmail(){
+    private fun openFragment(addedFragment: Fragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_container, addedFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun openHomeFragment(deletedFragment: Fragment, addedFragment: Fragment) {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.detach(deletedFragment)
+        transaction.replace(R.id.main_container, addedFragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    companion object {
+        fun newInstance() = LoginFragment()
+    }
+
+    fun sendPasswordResetEmail() {
         val emailAddress = "user@example.com"
 
         Firebase.auth.sendPasswordResetEmail(emailAddress)
@@ -106,7 +157,7 @@ class LoginFragment : BaseFragment(), AuthListener {
             }
     }
 
-    fun deleteUser(){
+    fun deleteUser() {
         val user = Firebase.auth.currentUser!!
 
         user.delete()

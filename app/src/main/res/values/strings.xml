@@ -28,4 +28,9 @@
     <string name="is_user_loggin_default_false">is user loggin default false</string>
     <string name="add_new_task">Yeni Görev Ekle</string>
     <string name="add_new_note">Yeni Not Ekle</string>
+    <string name="hint_add_todo">Yapılacak öğesi ekle</string>
+    <string name="hint_add_note">Not ekle</string>
+    <string name="save">kaydet</string>
+    <string name="email_password_cant_empty">Email veya şifre boş bırakılamaz</string>
+    <string name="log_out">Çıkış yap</string>
 </resources>

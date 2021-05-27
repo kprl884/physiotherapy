@@ -38,7 +38,7 @@ BaseRecyclerAdapter<T :Any> (
     abstract class AddButtonViewHolder(view: View): BaseViewHolder<Unit>(view)
 
 
-    abstract class BaseViewHolder<E>(val view: View) : RecyclerView.ViewHolder(view) {
+    abstract class BaseViewHolder<E>(val   view: View) : RecyclerView.ViewHolder(view) {
         abstract fun onBind(data: E, position: Int, touchActionDelegate: (() -> Unit)? =null, listIndex :Int)
     }
 

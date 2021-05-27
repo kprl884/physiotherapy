@@ -13,12 +13,12 @@ class NoteView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 1,
 
-    ) : ConstraintLayout(context, attrs, defStyleAttr)  {
-        private var descriptionView: EditText? = null
-        fun initView (note : Note){
-            descriptionView = findViewById(R.id.note_item_description)
-            descriptionView!!.text = note.description.toEditable()
-        }
+    ) : ConstraintLayout(context, attrs, defStyleAttr) {
+    private var descriptionView: EditText? = null
+    fun initView(note: Note) {
+        descriptionView = findViewById(R.id.note_item_description)
+        descriptionView!!.text = note.description.toEditable()
+    }
 
-    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+    private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
 }

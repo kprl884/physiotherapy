@@ -1,4 +1,4 @@
-package com.example.physiotherapy.viewmodel
+package com.example.physiotherapy.view.auth.register
 
 import android.app.Application
 import androidx.lifecycle.LiveData

@@ -6,20 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import androidx.viewpager2.widget.ViewPager2
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentBinding
+import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.model.SelectedStudentSlideModel
 import com.example.physiotherapy.model.Tag
 import com.example.physiotherapy.model.Task
-import com.example.physiotherapy.view.BaseFragment
+import com.example.physiotherapy.view.MainActivity
+import com.example.physiotherapy.view.MainFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class SSDetailFragment : BaseFragment() {
+class SSDetailFragment :
+    BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
     private lateinit var  listOfFragment : ArrayList<Fragment>
+    private val TAG: String = SSDetailFragment::class.java.simpleName
+    private val mainFragment = MainFragment.newInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -127,12 +134,26 @@ class SSDetailFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        setToolbarVisibility(getString(R.string.app_name), View.GONE)
+        setToolbarVisibility(getString(R.string.app_name), View.GONE, TAG)
+        (this.requireActivity() as MainActivity).binding.toolbarLayout.toolbarSaveBtn.setOnClickListener {
+            onAddButtonClicked()
+        }
     }
 
     companion object {
         fun newInstance() = SSDetailFragment()
     }
-
+    private fun onAddButtonClicked() {
+        NavHostFragment.findNavController(this).navigate(
+            R.id.action_selectedStudentFragment_to_createNoteFragment,
+            null,
+            navOptions { // Use the Kotlin DSL for building NavOptions
+                anim {
+                    enter = android.R.animator.fade_in
+                    exit = android.R.animator.fade_out
+                }
+            }
+        )
+    }
 
 }

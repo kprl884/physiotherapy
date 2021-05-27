@@ -2,9 +2,30 @@ package com.example.physiotherapy.view.students.selectedStudentDetail.notes
 
 import com.example.physiotherapy.model.Note
 
-class NoteModel {
+class NoteModel : INoteModel {
+    override fun addNote(note: Note, callback: SuccessCallback) {
+        callback.invoke(true)
 
-    fun getFakeData(): MutableList<Note> = mutableListOf<Note>(
+
+
+
+
+
+    }
+
+    override fun updateNote(note: Note, callback: SuccessCallback) {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteNote(note: Note, callback: SuccessCallback) {
+        TODO("Not yet implemented")
+    }
+
+    override fun retrieveNotes(): List<Note> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFakeData(): MutableList<Note> = mutableListOf<Note>(
         Note("notes 1", null),
         Note("notes 2", null),
         Note("notes 3", null)
