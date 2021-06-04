@@ -1,8 +1,9 @@
 # physiotherapy
 It is a mobile application draft suitable for mvvm architecture, where experts can follow physiotherapy patients.
 * Login Screens
-![Ekran Görüntüsü (382)](https://user-images.githubusercontent.com/62509948/120748023-bca1d780-c50a-11eb-89bb-ed44af4457c5.png)
-![Ekran Görüntüsü (381)](https://user-images.githubusercontent.com/62509948/120748031-c0cdf500-c50a-11eb-92ac-39fca9bf2e1a.png)
+![Ekran Görüntüsü (384)](https://user-images.githubusercontent.com/62509948/120748094-e0651d80-c50a-11eb-8a5c-f11af2610c24.png)
+![Ekran Görüntüsü (385)](https://user-images.githubusercontent.com/62509948/120748098-e22ee100-c50a-11eb-8b31-9dec4987c2b0.png)
+
 These are the screens created for users to log in to the application, become a member and perform operations such as password reset. While preparing these screens, Firebase authentication features are used and member records are created in the Firebase database for each user who is a member of the application. While logging in, the member database is used and the application is entered according to the matches.
 
 <h1 align="center">Hi 👋, I'm Alparslan</h1>
