@@ -6,12 +6,17 @@ It is a mobile application draft suitable for mvvm architecture, where experts c
 ![Ekran Görüntüsü (384)](https://user-images.githubusercontent.com/62509948/120915598-2ce85e80-c6ad-11eb-84f2-5574378f94f8.png)
 ![Ekran Görüntüsü (386)](https://user-images.githubusercontent.com/62509948/120915709-fd862180-c6ad-11eb-8a93-1a59c16ef79d.png)
 
-
-
-
-
-
 These are the screens created for users to log in to the application, become a member and perform operations such as password reset. While preparing these screens, Firebase authentication features are used and member records are created in the Firebase database for each user who is a member of the application. While logging in, the member database is used and the application is entered according to the matches.
+
+* Add Student
+
+![Ekran Görüntüsü (387)](https://user-images.githubusercontent.com/62509948/120915780-5d7cc800-c6ae-11eb-9cbf-bcee53ab6f6a.png)
+
+When the informations on the student add screen is filled successfully, its are uploaded to firebase. When needed, it is pulled from the firestore database again.
+
+
+
+
 
 <h1 align="center">Hi 👋, I'm Alparslan</h1>
 <h3 align="center">A passionate mobile developer from Turkey</h3>
