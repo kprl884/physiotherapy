@@ -3,7 +3,8 @@ It is a mobile application draft suitable for mvvm architecture, where experts c
 * Login and Register Screens
 
 ![Ekran Görüntüsü (385)](https://user-images.githubusercontent.com/62509948/120915596-2b1e9b00-c6ad-11eb-88f7-77d2511a6459.png)
-![Ekran Görüntüsü (384)](https://user-images.githubusercontent.com/62509948/120915598-2ce85e80-c6ad-11eb-84f2-5574378f94f8.png)![Ekran ![Ekran Görüntüsü (386)](https://user-images.githubusercontent.com/62509948/120915709-fd862180-c6ad-11eb-8a93-1a59c16ef79d.png)
+![Ekran Görüntüsü (384)](https://user-images.githubusercontent.com/62509948/120915598-2ce85e80-c6ad-11eb-84f2-5574378f94f8.png)
+![Ekran Görüntüsü (386)](https://user-images.githubusercontent.com/62509948/120915709-fd862180-c6ad-11eb-8a93-1a59c16ef79d.png)
 
 
 
