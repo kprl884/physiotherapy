@@ -11,12 +11,13 @@
     <string name="renciler">Öğrenciler</string>
     <string name="profil">Profil</string>
     <string name="hint_password">*****</string>
-    <string name="forget_password">Forget Password?</string>
+    <string name="forget_password">Şifreyi unuttum</string>
     <string name="renci_ekle">Öğrenci ekle</string>
     <string name="nceki_sayfa">Önceki Sayfa</string>
     <string name="ifre">Şifre</string>
     <string name="kullan_c_ad">Kullanıcı adı</string>
     <string name="g_revler">Görevler</string>
+    <string name="add_new_student">Yeni Öğrenci Ekle</string>
     <string name="notlar">Notlar</string>
     <string name="home">Anasayfa</string>
     <string name="profile">Profil</string>

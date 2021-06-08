@@ -9,24 +9,18 @@
         android:layout_height="match_parent"
         tools:context=".view.students.StudentsFragment">
 
-        <EditText
+        <TextView
             android:id="@+id/student_frag_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/renciler"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/student_frag_btn_student_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/renci_ekle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/student_frag_header" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/student_recyclerView"
@@ -36,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/student_frag_btn_student_add"
+            app:layout_constraintTop_toBottomOf="@id/student_frag_header"
             tools:listitem="@layout/students_recyclerview_item">
 
         </androidx.recyclerview.widget.RecyclerView>

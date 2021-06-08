@@ -5,12 +5,6 @@ import com.example.physiotherapy.model.Note
 class NoteModel : INoteModel {
     override fun addNote(note: Note, callback: SuccessCallback) {
         callback.invoke(true)
-
-
-
-
-
-
     }
 
     override fun updateNote(note: Note, callback: SuccessCallback) {

@@ -13,7 +13,7 @@
     <string name="renciler">Öğrenciler</string>
     <string name="profil">Profil</string>
     <string name="hint_password">*****</string>
-    <string name="forget_password">Forget Password?</string>
+    <string name="forget_password">Şifreyi Unuttum</string>
     <string name="student_delete_icon">stundent delete icon</string>
     <string name="renci_ekle">Öğrenci ekle</string>
     <string name="nceki_sayfa">Önceki Sayfa</string>
@@ -28,6 +28,7 @@
     <string name="is_user_loggin_default_false">is user loggin default false</string>
     <string name="add_new_task">Yeni Görev Ekle</string>
     <string name="add_new_note">Yeni Not Ekle</string>
+    <string name="add_new_student">Yeni Öğrenci Ekle</string>
     <string name="hint_add_todo">Yapılacak öğesi ekle</string>
     <string name="hint_add_note">Not ekle</string>
     <string name="save">kaydet</string>

@@ -71,7 +71,6 @@ class SSNotesFragment : BaseFragment() {
         noteViewModel = ViewModelProvider(this).get(SSNoteViewModel::class.java)
 
         noteViewModel.mutableNoteList.observe(viewLifecycleOwner, Observer { noteList ->
-            noteList
 
             contentView.updateList(noteList)
         })

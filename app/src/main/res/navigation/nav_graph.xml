@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_students"
-        android:name="com.example.physiotherapy.view.students.StudentsFragment"
+        android:name="com.example.physiotherapy.view.students.studentList.StudentsFragment"
         android:label="StudentsFragment">
         <action
             android:id="@+id/action_studentsFragment_to_addStudentFragment"
@@ -45,6 +45,10 @@
         <action
             android:id="@+id/action_studentsFragment_to_selectedStudentFragment"
             app:destination="@id/selectedStudentFragment" />
+        <argument
+            android:name="student"
+            app:argType="com.example.physiotherapy.model.Student"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"

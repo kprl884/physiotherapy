@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -13,8 +11,6 @@ import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentTasksBinding
 import com.example.physiotherapy.foundations.BaseFragment
-import com.example.physiotherapy.view.MainActivity
-import com.example.physiotherapy.view.students.selectedStudentDetail.notes.SSNotesFragment
 
 
 class SSTasksFragment : BaseFragment() {

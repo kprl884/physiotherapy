@@ -24,9 +24,11 @@ class SSDetailFragment :
     BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
-    private lateinit var  listOfFragment : ArrayList<Fragment>
+    private lateinit var listOfFragment: ArrayList<Fragment>
     private val TAG: String = SSDetailFragment::class.java.simpleName
+
     private val mainFragment = MainFragment.newInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,17 +39,20 @@ class SSDetailFragment :
         savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.fragment_selected_student,
             container,
-            false)
-        val tag:Tag = Tag("High Priority", R.color.colorPrimary)
+            false
+        )
+        val tag: Tag = Tag("High Priority", R.color.colorPrimary)
 
         val task = Task("Get Groceries")
 
         val s = task.title
-       // binding.selectedStudentNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        // binding.selectedStudentNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //binding.selectedStudentNavView.itemIconTintList = null;
+
         return binding.root
     }
 
@@ -71,66 +76,17 @@ class SSDetailFragment :
         //theVP2InTheMainActivity.adapter = adapter
         //theVP2InTheMainActivity.setCurrentItem(1)
 
-        TabLayoutMediator(tabLayoutSelectedStudent, viewPager2SelectedStudent) {tab, position ->
-            if (position == 0){
+        TabLayoutMediator(tabLayoutSelectedStudent, viewPager2SelectedStudent) { tab, position ->
+            if (position == 0) {
                 tab.text = getString(R.string.g_revler)
-            }else if (position == 1){
+            } else if (position == 1) {
                 tab.text = getString(R.string.notlar)
             }
         }.attach()
-        /*
-        viewPager2SelectedStudent.registerOnPageChangeCallback(object :
-            OnPageChangeCallback() {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int,
-            ) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            }
 
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                Log.e("Selected_Page", position.toString())
-            }
 
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-            }
-        })
-
-        */
-
-        /*
-        tabLayoutSelectedStudent.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-
-                Toast.makeText(context, "Tab ${tab?.text} selected", Toast.LENGTH_SHORT).show()
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                Toast.makeText(context, "Tab ${tab?.text} unselected", Toast.LENGTH_SHORT).show()
-
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                Toast.makeText(context, "Tab ${tab?.text} reselected", Toast.LENGTH_SHORT).show()
-
-            }
-
-        })
-*/
-        /*
-        binding.selectedStudentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = SelectedStudentDetailAdapter(mutableListOf(
-            Task("Testing One!"),
-            Task("Testing Two"),
-            Task("Testing Three")
-        ))
-        binding.selectedStudentRecyclerView.adapter = adapter
-         */
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -143,6 +99,7 @@ class SSDetailFragment :
     companion object {
         fun newInstance() = SSDetailFragment()
     }
+
     private fun onAddButtonClicked() {
         NavHostFragment.findNavController(this).navigate(
             R.id.action_selectedStudentFragment_to_createNoteFragment,

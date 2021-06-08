@@ -11,8 +11,10 @@ import com.example.physiotherapy.foundations.BaseFragment
 
 
 class AddStudentFragment : BaseFragment() {
-
     private lateinit var binding: FragmentAddStudentBinding
+    private lateinit var sName: String
+    private lateinit var sSurname: String
+    private var sPhoneNumber: Int? = null
 
 
     override fun onCreateView(
@@ -23,6 +25,18 @@ class AddStudentFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_student, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    fun createStudent() {
+        sName = binding.addStudentEtName.editableText.toString()
+        sSurname = binding.addStudentEtLastName.editableText.toString()
+        sPhoneNumber = binding.addStudentEtPhoneNumber.editableText.toString().toInt()
+
     }
 
     override fun onResume() {
