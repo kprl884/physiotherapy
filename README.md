@@ -16,6 +16,8 @@ These are the screens created for users to log in to the application, become a m
 When the informations on the student add screen is filled successfully, its are uploaded to firebase. When needed, it is pulled from the firestore database again.
 
 
+![WhatsApp Image 2021-06-14 at 18 27 21 (1)](https://user-images.githubusercontent.com/62509948/121917987-4be69080-cd3e-11eb-8cbc-5f6015ae4b85.jpeg)
+![WhatsApp Image 2021-06-14 at 18 27 21](https://user-images.githubusercontent.com/62509948/121917996-4e48ea80-cd3e-11eb-8700-055686679c2a.jpeg)
 
 
 
