@@ -9,8 +9,9 @@ It is a mobile application draft suitable for mvvm architecture, where experts c
 These are the screens created for users to log in to the application, become a member and perform operations such as password reset. While preparing these screens, Firebase authentication features are used and member records are created in the Firebase database for each user who is a member of the application. While logging in, the member database is used and the application is entered according to the matches.
 
 * Add Student
+* 
+![Ekran Görüntüsü (454)](https://user-images.githubusercontent.com/62509948/121916813-29a04300-cd3d-11eb-9132-c14feb76c456.png)
 
-![Ekran Görüntüsü (387)](https://user-images.githubusercontent.com/62509948/120915780-5d7cc800-c6ae-11eb-9cbf-bcee53ab6f6a.png)
 
 When the informations on the student add screen is filled successfully, its are uploaded to firebase. When needed, it is pulled from the firestore database again.
 
