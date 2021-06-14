@@ -14,5 +14,12 @@
     <color name="bottom_nav_item_color">#3F51B5</color>
     <color name="transparent">#00000000</color>
 
+    <color name="green">#A0BA</color>
+    <color name="red">#B00</color>
+    <color name="yellow">#FF0</color>
+
+    <color name="jd_light">#E5001F</color>
+    <color name="jd_red">#CB0000</color>
+
 </resources>
 

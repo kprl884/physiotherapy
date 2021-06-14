@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewmodel"
-            type="com.example.physiotherapy.viewmodel.AuthViewModel" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,6 +13,8 @@
         <EditText
             android:id="@+id/login_et_user_mail"
             android:layout_width="0dp"
+            android:padding="8dp"
+            android:background="@drawable/edittex_rounded"
             android:layout_height="wrap_content"
             android:layout_margin="35dp"
             android:hint="@string/fui_email_hint"
@@ -28,6 +24,8 @@
 
         <EditText
             android:id="@+id/login_et_password"
+            android:padding="8dp"
+            android:background="@drawable/edittex_rounded"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="35dp"
@@ -42,27 +40,30 @@
             android:id="@+id/login_btn_forger_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:padding="5dp"
+            android:background="@drawable/button_shape_round"
             android:text="@string/forget_password"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
+            android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="@id/login_et_password"
+            app:layout_constraintBottom_toTopOf="@id/login_btn_login"
             app:layout_constraintTop_toBottomOf="@id/login_et_password" />
 
         <Button
             android:id="@+id/login_btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/button_shape_round"
+            android:padding="5dp"
             android:text="@string/giri_yap"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_margin="20dp"
             app:layout_constraintEnd_toEndOf="@id/login_et_password"
             app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
 
@@ -70,11 +71,12 @@
             android:id="@+id/login_btn_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
+            android:background="@drawable/button_shape_round"
             android:text="@string/kay_t_ol"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
+            android:layout_margin="20dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/login_et_password"
             app:layout_constraintTop_toBottomOf="@id/login_btn_forger_btn" />
