@@ -2,7 +2,7 @@
 It is a mobile application draft suitable for mvvm architecture, where experts can follow physiotherapy patients.
 * Login and Register Screens
 
-![Ekran Görüntüsü (444)](https://user-images.githubusercontent.com/62509948/121915983-67509c00-cd3c-11eb-9517-c3f399cde42a.png)
+![Ekran Görüntüsü (444)](https://user-images.githubusercontent.com/62509948/121916113-85b69780-cd3c-11eb-9b98-1841fbc4869a.png)
 ![Ekran Görüntüsü (431)](https://user-images.githubusercontent.com/62509948/121916000-6a4b8c80-cd3c-11eb-818d-c00b92349307.png)
 
 
