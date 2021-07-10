@@ -7,13 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.physiotherapy.view.MainActivity
-import com.example.physiotherapy.view.MainFragment
-import com.example.physiotherapy.view.home.HomeFragment
-import com.example.physiotherapy.view.students.create.CreateFragment
-import com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment
-import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment
-import kotlinx.android.synthetic.main.toolbar_layout.*
-import kotlinx.android.synthetic.main.toolbar_layout.view.*
 
 open class BaseFragment : Fragment() {
     private var mainActivity: MainActivity? = null

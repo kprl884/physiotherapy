@@ -32,12 +32,12 @@ class ProfileFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("location","ProfileFragment")
+        Log.d("location", "ProfileFragment")
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         mAuth = FirebaseAuth.getInstance()
         binding.profileBtnLogOut.setOnClickListener {
-            mAuth.signOut()
+            logOut()
             val loginFragment = LoginFragment.newInstance()
             openFragment(newInstance(), loginFragment)
 
@@ -47,17 +47,18 @@ class ProfileFragment : BaseFragment() {
         return binding.root
     }
 
-    private fun logOut(){
-
+    private fun logOut() {
+        mAuth.signOut()
     }
 
-    private fun openFragment(deletedFragment:Fragment, fragment: Fragment) {
+    private fun openFragment(deletedFragment: Fragment, fragment: Fragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.remove(deletedFragment)
         transaction.replace(R.id.main_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
     override fun onResume() {
         super.onResume()
         setToolbarVisibility(getString(R.string.app_name), View.GONE, fragmentName)

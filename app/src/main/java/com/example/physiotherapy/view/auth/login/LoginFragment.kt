@@ -38,7 +38,7 @@ class LoginFragment : Fragment(), AuthListener {
 
         auth = FirebaseAuth.getInstance()
 
-        isLogin = arguments?.getParcelable("isLogin")
+        //isLogin = arguments?.getParcelable("isLogin")
 
         //val userRecord: UserRecord = FirebaseAuth.getInstance().getUser(uid)
 
@@ -130,7 +130,6 @@ class LoginFragment : Fragment(), AuthListener {
     private fun openFragment(addedFragment: Fragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_container, addedFragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 
@@ -138,7 +137,6 @@ class LoginFragment : Fragment(), AuthListener {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.detach(deletedFragment)
         transaction.replace(R.id.main_container, addedFragment)
-        transaction.addToBackStack(null)
         transaction.commit()
     }
 

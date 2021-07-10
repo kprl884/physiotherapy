@@ -5,12 +5,11 @@
     <string name="sim">İsim</string>
     <string name="kay_t_ol">Kayıt ol</string>
     <string name="giri_yap">Giriş yap</string>
-    <string name="ifremi_unuttum">Şifremi Unuttum</string>
-    <string name="password">password</string>
-    <string name="username">userName</string>
+    <string name="password">parola</string>
+    <string name="username">Kullanıcı adı</string>
     <string name="renciler">Öğrenciler</string>
     <string name="profil">Profil</string>
-    <string name="hint_password">*****</string>
+    <string name="hint_password" translatable="false">*****</string>
     <string name="forget_password">Şifreyi unuttum</string>
     <string name="renci_ekle">Öğrenci ekle</string>
     <string name="nceki_sayfa">Önceki Sayfa</string>
@@ -21,11 +20,16 @@
     <string name="notlar">Notlar</string>
     <string name="home">Anasayfa</string>
     <string name="profile">Profil</string>
-    <string name="is_user_loggin">is user loggin</string>
-    <string name="is_user_loggin_default_false">is user loggin default false</string>
+    <string name="is_user_loggin">kullanıcı giriş yaptı mı</string>
+    <string name="is_user_loggin_default_false" translatable="false">is user loggin default false</string>
     <string name="add_new_task">Yeni Görev Ekle</string>
     <string name="hint_add_todo">Yapılacak öğesi ekle</string>
     <string name="save">kaydet</string>
     <string name="email_password_cant_empty">Email veya şifre boş bırakılamaz</string>
     <string name="log_out">Çıkış yap</string>
+    <string name="userphone">Kullanıcı Telefon Numarası</string>
+    <string name="user_surname">Kullanıcı Soyadı</string>
+    <string name="user_password">Kullanıcı Şifre</string>
+    <string name="user_mail">Kullanıcı Mail</string>
+    <string name="edit">Düzenle</string>
 </resources>

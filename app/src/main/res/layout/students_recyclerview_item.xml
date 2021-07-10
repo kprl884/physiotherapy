@@ -51,4 +51,4 @@
         app:srcCompat="@drawable/ic_delete" />
 
 
-</   >
+</androidx.constraintlayout.widget.ConstraintLayout>

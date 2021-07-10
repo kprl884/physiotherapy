@@ -13,10 +13,6 @@ class RegisterViewModel(application: Application) : ViewModel() {
     val name: LiveData<String?>
         get() = _name
 
-    private val _surName = MutableLiveData<String?>()
-    val surName: LiveData<String?>
-        get() = _surName
-
     private val _userName = MutableLiveData<String?>()
     val userName: LiveData<String?>
         get() = _userName
@@ -28,6 +24,14 @@ class RegisterViewModel(application: Application) : ViewModel() {
     private val _phoneNumber = MutableLiveData<String?>()
     val phoneNumber: LiveData<String?>
         get() = _phoneNumber
+
+    private val _mail = MutableLiveData<String?>()
+    val mail: LiveData<String?>
+        get() = _mail
+
+
+
+
 
 
 }

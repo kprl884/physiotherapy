@@ -7,20 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentRegisterBinding
-import com.example.physiotherapy.foundations.BaseFragment
+import com.example.physiotherapy.model.Physiotherapist
 import com.example.physiotherapy.view.auth.login.LoginFragment
-import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlin.math.log
 
 
 class RegisterFragment : Fragment() {
@@ -29,10 +26,13 @@ class RegisterFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var userName: String
     private lateinit var userSurname: String
-    private var userPhoneNumber: Int? = null
+    private var userPhoneNumber: String? = null
     private lateinit var email: String
     private lateinit var password: String
-    private lateinit var loginFragment : Fragment
+    private lateinit var loginFragment: Fragment
+    private val db = Firebase.firestore
+    private lateinit var database: DatabaseReference
+    private lateinit var user:Physiotherapist
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,26 +42,33 @@ class RegisterFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         loginFragment = LoginFragment.newInstance()
 
-        binding.registerBtnRegister.setOnClickListener {
-            registerUser()
-        }
-        binding.registerBtnBack.setOnClickListener {
-
-            openFragment(newInstance(), loginFragment)
-        }
-
         return binding.root
     }
 
-    private fun registerUser() {
-        email = binding.registerEtEmail.editableText.toString()
-        password = binding.registerEtPassword.editableText.toString()
-        if (email == null){
-            Log.e("alp", email + "email bos")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.registerBtnRegister.setOnClickListener {
+            email = binding.registerEtEmail.editableText.toString()
+            password = binding.registerEtPassword.editableText.toString()
+            userName = binding.registerEtName.editableText.toString()
+            userSurname = binding.registerEtLastName.editableText.toString()
+            userPhoneNumber = binding.registerEtPhoneNumber.editableText.toString()
+
+            user = createPhysiotherapist(
+                userName,
+                userSurname,
+                userPhoneNumber!!,
+                email,
+                password
+            )
+            registerUser(user)
         }
-        if (password == null){
-            Log.e("alp", password + "pass bos")
+        binding.registerBtnBack.setOnClickListener {
+            openFragment(newInstance(), loginFragment)
         }
+    }
+
+    private fun registerUser(user: Physiotherapist) {
         if (email.isEmpty() or password.isEmpty()) {
             Toast.makeText(
                 context,
@@ -72,41 +79,30 @@ class RegisterFragment : Fragment() {
         } else {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isComplete) {
-                    /*
-                    NavHostFragment.findNavController(this).navigate(
-                        R.id.action_registerFragment_to_loginFragment2,
-                        null,
-                        navOptions { // Use the Kotlin DSL for building NavOptions
-                            anim {
-                                enter = android.R.animator.fade_in
-                                exit = android.R.animator.fade_out
-                            }
-                        }
-                    )
-                     */
-
                     openFragment(newInstance(), loginFragment)
+                    setFirebaseForUser(user)
                 }
             }.addOnFailureListener {
                 it.let {
                     Toast.makeText(
                         context,
-                        "Kayıt olurken hata oluştu. Lütfen tekrar deneyiniz",
+                        getString(R.string.register_failed),
                         Toast.LENGTH_LONG
                     ).show()
                     Log.e("alp", it.localizedMessage)
                 }
             }
         }
-
     }
-    private fun openFragment(deletedFragment:Fragment, fragment: Fragment) {
+
+    private fun openFragment(deletedFragment: Fragment, fragment: Fragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.detach(deletedFragment)
         transaction.replace(R.id.main_container, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }
+
     fun setPassword() {
         val newPassword = "SOME-SECURE-PASSWORD"
         val user = Firebase.auth.currentUser
@@ -125,5 +121,26 @@ class RegisterFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         //setToolbarVisibility(getString(R.string.app_name), View.GONE, fragmentName)
+    }
+
+    private fun setFirebaseForUser(user:Physiotherapist) {
+        db.collection("users")
+            .add(user)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error adding document", e)
+            }
+    }
+
+    private fun createPhysiotherapist(
+        name: String,
+        surName: String,
+        phoneNumber: String,
+        mail: String,
+        password: String
+    ): Physiotherapist {
+        return Physiotherapist(name, surName, phoneNumber, mail, password)
     }
 }

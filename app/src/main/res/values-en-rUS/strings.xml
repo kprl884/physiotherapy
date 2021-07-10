@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="edit">Edit</string>
+    <string name="is_user_loggin">is user loggin</string>
+    <string name="profile">Profil</string>
+    <string name="telefon_numaras">Phone Number</string>
+    <string name="soyisim">Lastname</string>
+    <string name="sim">Name</string>
+    <string name="kay_t_ol">Register</string>
+    <string name="giri_yap">Log in</string>
+    <string name="password">password</string>
+    <string name="username">user name</string>
+    <string name="renciler">Students</string>
+    <string name="profil">Profile</string>
+    <string name="user_mail">Email</string>
+    <string name="user_password">Password</string>
+    <string name="user_surname">Lastname</string>
+    <string name="userphone">Phone Number</string>
+    <string name="register_failed">An error occurred while registering. Please try again</string>
+    <string name="log_out">Log out</string>
+    <string name="email_password_cant_empty">Email or password cannot be left blank</string>
+    <string name="save">save</string>
+    <string name="hint_add_note">Add note</string>
+    <string name="hint_add_todo">Add to-do item</string>
+    <string name="add_new_student">Add New Student</string>
+    <string name="add_new_note">Add New Note</string>
+    <string name="add_new_task">Add New Task</string>
+    <string name="students">Students</string>
+    <string name="home">Home</string>
+    <string name="notlar">Notes</string>
+    <string name="g_revler">Tasks</string>
+    <string name="kullan_c_ad">Username</string>
+    <string name="ifre">Password</string>
+    <string name="nceki_sayfa">previous page</string>
+    <string name="renci_ekle">Add New Student</string>
+    <string name="forget_password">Forgot password</string>
+</resources>

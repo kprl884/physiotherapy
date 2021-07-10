@@ -6,9 +6,7 @@ import java.io.Serializable
 
 @Parcelize
 data class Student(
+    val id: Int?,
     val name: String,
     val surName: String,
-    val userName: String?,
-    val password: String?,
-    val id: Int?
 ) : Parcelable, Serializable
