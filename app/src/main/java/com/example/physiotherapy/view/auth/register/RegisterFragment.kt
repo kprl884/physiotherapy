@@ -6,33 +6,26 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentRegisterBinding
-import com.example.physiotherapy.model.Physiotherapist
+import com.example.physiotherapy.repository.FirebaseViewModel
 import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+private val TAG = "RegisterFragment"
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private val fragmentName: String = LoginFragment::class.java.simpleName
     private lateinit var auth: FirebaseAuth
-    private lateinit var userName: String
-    private lateinit var userSurname: String
-    private var userPhoneNumber: String? = null
-    private lateinit var email: String
-    private lateinit var password: String
     private lateinit var loginFragment: Fragment
-    private val db = Firebase.firestore
-    private lateinit var database: DatabaseReference
-    private lateinit var user:Physiotherapist
+    private lateinit var firebaseViewModel: FirebaseViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +34,7 @@ class RegisterFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
         auth = FirebaseAuth.getInstance()
         loginFragment = LoginFragment.newInstance()
+        firebaseViewModel = ViewModelProvider(this).get(FirebaseViewModel::class.java)
 
         return binding.root
     }
@@ -48,52 +42,20 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.registerBtnRegister.setOnClickListener {
-            email = binding.registerEtEmail.editableText.toString()
-            password = binding.registerEtPassword.editableText.toString()
-            userName = binding.registerEtName.editableText.toString()
-            userSurname = binding.registerEtLastName.editableText.toString()
-            userPhoneNumber = binding.registerEtPhoneNumber.editableText.toString()
-
-            user = createPhysiotherapist(
-                userName,
-                userSurname,
-                userPhoneNumber!!,
-                email,
-                password
-            )
-            registerUser(user)
+            if (validateName() && validateEmail() && validatePassword()) {
+                firebaseViewModel.registerUserFromAuthWithEmailAndPassword(
+                    binding.registerEtName.text.toString(),
+                    binding.registerEtEmail.text.toString(),
+                    binding.registerEtPassword.text.toString(),
+                    requireActivity()
+                )
+            }
         }
         binding.registerBtnBack.setOnClickListener {
             openFragment(newInstance(), loginFragment)
         }
     }
 
-    private fun registerUser(user: Physiotherapist) {
-        if (email.isEmpty() or password.isEmpty()) {
-            Toast.makeText(
-                context,
-                getString(R.string.email_password_cant_empty),
-                Toast.LENGTH_LONG
-            ).show()
-
-        } else {
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                if (it.isComplete) {
-                    openFragment(newInstance(), loginFragment)
-                    setFirebaseForUser(user)
-                }
-            }.addOnFailureListener {
-                it.let {
-                    Toast.makeText(
-                        context,
-                        getString(R.string.register_failed),
-                        Toast.LENGTH_LONG
-                    ).show()
-                    Log.e("alp", it.localizedMessage)
-                }
-            }
-        }
-    }
 
     private fun openFragment(deletedFragment: Fragment, fragment: Fragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -123,24 +85,40 @@ class RegisterFragment : Fragment() {
         //setToolbarVisibility(getString(R.string.app_name), View.GONE, fragmentName)
     }
 
-    private fun setFirebaseForUser(user:Physiotherapist) {
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
-            }
+
+    private fun validateName(): Boolean {
+        val name = binding.registerEtName.text.toString().trim()
+
+        return if (name.length < 6) {
+            binding.registerEtName.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
     }
 
-    private fun createPhysiotherapist(
-        name: String,
-        surName: String,
-        phoneNumber: String,
-        mail: String,
-        password: String
-    ): Physiotherapist {
-        return Physiotherapist(name, surName, phoneNumber, mail, password)
+    private fun validateEmail(): Boolean {
+        val email = binding.registerEtEmail.text.toString().trim()
+
+        return if (!email.contains("@") && !email.contains(".")) {
+            binding.registerEtEmail.error = "Enter a valid email"
+            false
+        } else if (email.length < 6) {
+            binding.registerEtEmail.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validatePassword(): Boolean {
+        val password = binding.registerEtPassword.text.toString().trim()
+
+        return if (password.length < 6) {
+            binding.registerEtPassword.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
     }
 }

@@ -16,10 +16,10 @@ class StudentsViewModel : ViewModel() {
     }
 
     private fun getFakeData(): MutableList<Student> = mutableListOf<Student>(
-        Student("Alparslan", "Köprülü", "alprslnk", "123456", 1),
-        Student("Bera", "Gelebek", "beraglk", "123456", 2),
-        Student("mustafa", "seki", "mstfsk", "123456", 3),
-        Student("kedi", "ak", "kdrak", "123456", 4),
-        Student("enes", "güreli", "enesgrl", "123456", 5)
+        Student(1,"Alparslan", "Köprülü"),
+        Student(2,"Bera", "Gelebek"),
+        Student(3,"mustafa", "seki"),
+        Student(4,"kedi", "ak"),
+        Student(5,"enes", "güreli")
     )
 }

@@ -1,0 +1,15 @@
+package com.example.physiotherapy.repository
+
+import android.content.Context
+import com.example.physiotherapy.utils.Result
+import com.google.firebase.auth.FirebaseUser
+import com.example.physiotherapy.model.User
+interface UserRepository {
+    suspend fun registerUserFromAuthWithEmailAndPassword(
+        email: String,
+        password: String,
+        context: Context?
+    ): Result<FirebaseUser?>
+
+    suspend fun createUserInFirestore(user: User): Result<Any?>
+}
