@@ -1,130 +1,62 @@
 package com.example.physiotherapy.view.auth.login
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
-import com.example.physiotherapy.view.MainFragment
-import com.example.physiotherapy.view.auth.AuthListener
+import com.example.physiotherapy.repository.FirebaseViewModel
 import com.example.physiotherapy.view.auth.register.RegisterFragment
-import com.example.physiotherapy.view.home.HomeFragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 
-class LoginFragment : Fragment(), AuthListener {
+private val TAG = "LoginFragment"
+
+class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var enteredPassword: String
-    private lateinit var enteredMail: String
-    private val fragmentName: String = LoginFragment::class.java.simpleName
     private lateinit var auth: FirebaseAuth
-    private var isLogin: Boolean? = null
-    private val mainFragment = MainFragment.newInstance()
-    private val homeFragment = HomeFragment.newInstance()
+    private lateinit var firebaseViewModel: FirebaseViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
-
         auth = FirebaseAuth.getInstance()
+        firebaseViewModel = ViewModelProvider(this).get(FirebaseViewModel::class.java)
 
         //isLogin = arguments?.getParcelable("isLogin")
 
-        //val userRecord: UserRecord = FirebaseAuth.getInstance().getUser(uid)
+        return binding.root
+    }
 
-        binding.loginBtnLogin.setOnClickListener {
-            enteredPassword = binding.loginEtPassword.editableText.toString()
-            enteredMail = binding.loginEtUserMail.editableText.toString()
-
-            if (enteredPassword.isEmpty() || enteredMail.isEmpty()) {
-                Toast.makeText(
-                    context,
-                    "Şifre veya mail boş bırakılamaz. Lütfen tekrar deneyiniz.",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                signWithMailPassword(enteredMail, enteredPassword)
-            }
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.loginBtnRegister.setOnClickListener {
             val registerFragment = RegisterFragment.newInstance()
             openFragment(registerFragment)
         }
-        return binding.root
+
+        binding.loginBtnLogin.setOnClickListener {
+            if (validateEmail() && validatePassword()) {
+                firebaseViewModel.logInUserFromAuthWithEmailAndPassword(
+                    binding.loginEtUserMail.text.toString(),
+                    binding.loginEtPassword.text.toString(),
+                    requireActivity()
+                )
+            }
+
+        }
     }
 
     override fun onResume() {
         super.onResume()
         //setToolbarVisibility(getString(R.string.app_name), View.GONE, fragmentName)
-    }
-
-    override fun onStarted() {
-        Toast.makeText(requireContext(), "Login Started", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onSucces(userName: String, password: String) {
-        //login process
-        //home fragment
-    }
-
-    override fun onFailure(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
-
-    private fun signWithMailPassword(mail: String, password: String) {
-        auth.signInWithEmailAndPassword(mail, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                //Signed
-                openHomeFragment(newInstance(), homeFragment)
-            }
-
-        }.addOnFailureListener {
-            it.let {
-                Toast.makeText(
-                    context,
-                    "Giriş yaparken hata oluştu, lütfen tekrar deneyiniz.",
-                    Toast.LENGTH_LONG
-                ).show()
-                Log.e("alp", it.localizedMessage)
-            }
-        }
-    }
-
-    fun checkUserNamePassword() {
-        /*
-
-
-
-        val docRef = db.collection("users").document("$currentUser")
-        docRef.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w("TAG", "Listen failed.", e)
-                return@addSnapshotListener
-            }
-
-            val source = if (snapshot != null && snapshot.metadata.hasPendingWrites())
-                "Local"
-            else
-                "Server"
-
-            if (snapshot != null && snapshot.exists()) {
-                Log.d("TAG", "$source data: ${snapshot.data}")
-            } else {
-                Log.d("TAG", "$source data: null")
-            }
-        }*/
     }
 
     private fun openFragment(addedFragment: Fragment) {
@@ -140,30 +72,34 @@ class LoginFragment : Fragment(), AuthListener {
         transaction.commit()
     }
 
+    private fun validateEmail(): Boolean {
+        val email = binding.loginEtUserMail.text.toString().trim()
+
+        return if (!email.contains("@") && !email.contains(".")) {
+            binding.loginEtUserMail.error = "Enter a valid email"
+            false
+        } else if (email.length < 6) {
+            binding.loginEtUserMail.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validatePassword(): Boolean {
+        val password = binding.loginEtPassword.text.toString().trim()
+
+        return if (password.length < 6) {
+            binding.loginEtPassword.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
+    }
+
     companion object {
         fun newInstance() = LoginFragment()
     }
 
-    fun sendPasswordResetEmail() {
-        val emailAddress = "user@example.com"
-
-        Firebase.auth.sendPasswordResetEmail(emailAddress)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "Email sent.")
-                }
-            }
-    }
-
-    fun deleteUser() {
-        val user = Firebase.auth.currentUser!!
-
-        user.delete()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "User account deleted.")
-                }
-            }
-    }
 
 }

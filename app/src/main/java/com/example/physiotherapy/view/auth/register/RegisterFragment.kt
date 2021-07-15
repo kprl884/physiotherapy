@@ -45,6 +45,7 @@ class RegisterFragment : Fragment() {
             if (validateName() && validateEmail() && validatePassword()) {
                 firebaseViewModel.registerUserFromAuthWithEmailAndPassword(
                     binding.registerEtName.text.toString(),
+                    binding.registerEtPhoneNumber.text.toString(),
                     binding.registerEtEmail.text.toString(),
                     binding.registerEtPassword.text.toString(),
                     requireActivity()

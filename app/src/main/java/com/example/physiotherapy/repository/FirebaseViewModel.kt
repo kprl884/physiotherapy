@@ -13,7 +13,6 @@ import com.example.physiotherapy.model.User
 import com.example.physiotherapy.repository.implementation.UserRepositoryImpl
 import com.example.physiotherapy.utils.Result
 import com.example.physiotherapy.view.auth.login.LoginFragment
-import com.example.physiotherapy.view.auth.register.RegisterFragment
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
@@ -28,7 +27,7 @@ class FirebaseViewModel : ViewModel() {
 
     //Email
     fun registerUserFromAuthWithEmailAndPassword(
-        name: String, email: String, password: String, activity: Activity
+        name: String, phoneNumber: String, email: String, password: String, activity: Activity
     ) {
 
         viewModelScope.launch {
@@ -40,7 +39,12 @@ class FirebaseViewModel : ViewModel() {
                 is Result.Success -> {
                     Log.e(TAG, "Result.Success")
                     result.data?.let { firebaseUser ->
-                        createUserInFirestore(createUserObject(firebaseUser, name), activity)
+                        createUserInFirestore(
+                            createUserObject(
+                                firebaseUser, name, phoneNumber = phoneNumber,
+                                mail = email, password = password
+                            ), activity
+                        )
                     }
                     openFragment(LoginFragment.newInstance(), activity as FragmentActivity)
                     /*
@@ -64,6 +68,7 @@ class FirebaseViewModel : ViewModel() {
 
     }
 
+    // TODO : toast mesaages will design
     private fun openFragment(fragment: Fragment, activity: FragmentActivity) {
         val transaction = activity.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_container, fragment)
@@ -90,11 +95,54 @@ class FirebaseViewModel : ViewModel() {
     fun createUserObject(
         firebaseUser: FirebaseUser,
         name: String,
+        phoneNumber: String,
+        mail: String,
+        password: String
     ): User {
-
         return User(
             id = firebaseUser.uid,
             name = name,
+            phoneNumber = phoneNumber,
+            mail = mail,
+            password = password
         )
+    }
+
+    fun logInUserFromAuthWithEmailAndPassword(email: String, password: String, activity: Activity) {
+        viewModelScope.launch {
+            when (val result =
+                userRepository.logInUserFromAuthWithEmailAndPassword(email, password)) {
+                is Result.Success -> {
+                    Log.i(TAG, "SignIn - Result.Success - User: ${result.data}")
+                    result.data?.let { firebaseUser ->
+                        // _toast.value = activity.getString(R.string.login_successful)
+                        getUserFromFirestore(firebaseUser.uid, activity)
+                    }
+                }
+                is Result.Error -> {
+                    //_toast.value = result.exception.message
+                }
+                is Result.Canceled -> {
+                    //_toast.value = activity.getString(R.string.request_canceled)
+                }
+            }
+        }
+
+    }
+
+    suspend fun getUserFromFirestore(userId: String, activity: Activity) {
+        when (val result = userRepository.getUserFromFirestore(userId)) {
+            is Result.Success -> {
+                val _user = result.data
+                _currentUserMLD.value = _user as User
+                //startMainActivitiy(activity = activity)
+            }
+            is Result.Error -> {
+                //_toast.value = result.exception.message
+            }
+            is Result.Canceled -> {
+                //_toast.value = activity.getString(R.string.request_canceled)
+            }
+        }
     }
 }

@@ -12,4 +12,11 @@ interface UserRepository {
     ): Result<FirebaseUser?>
 
     suspend fun createUserInFirestore(user: User): Result<Any?>
+
+    suspend fun logInUserFromAuthWithEmailAndPassword(
+        email: String,
+        password: String
+    ): Result<FirebaseUser?>
+
+    suspend fun getUserFromFirestore(userId: String): Result<Any?>
 }

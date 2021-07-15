@@ -3,6 +3,7 @@ package com.example.physiotherapy.repository.implementation
 import android.content.Context
 import android.util.Log
 import com.example.physiotherapy.extension.await
+import com.example.physiotherapy.model.User
 import com.example.physiotherapy.repository.FireabaseConst.Companion.USER_COLLECTION_NAME
 import com.example.physiotherapy.repository.UserRepository
 import com.example.physiotherapy.utils.Result
@@ -55,4 +56,48 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
+    override suspend fun logInUserFromAuthWithEmailAndPassword(
+        email: String,
+        password: String
+    ): Result<FirebaseUser?> {
+        try {
+            return when (val resultDocumentSnapshot =
+                firebaseAuth.signInWithEmailAndPassword(email, password).await()) {
+                is Result.Success -> {
+                    Log.i(TAG, "Result.Success")
+                    val firebaseUser = resultDocumentSnapshot.data.user
+                    Result.Success(firebaseUser)
+                }
+                is Result.Error -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Error(resultDocumentSnapshot.exception)
+                }
+                is Result.Canceled -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Canceled(resultDocumentSnapshot.exception)
+                }
+            }
+        } catch (exception: Exception) {
+            return Result.Error(exception)
+        }
+    }
+
+    override suspend fun getUserFromFirestore(userId: String): Result<Any?> {
+        try
+        {
+            return when(val resultDocumentSnapshot = userCollection.document(userId).get().await())
+            {
+                is Result.Success -> {
+                    val user = resultDocumentSnapshot.data.toObject(User::class.java)!!
+                    Result.Success(user)
+                }
+                is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
+                is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
+            }
+        }
+        catch (exception: Exception)
+        {
+            return Result.Error(exception)
+        }
+    }
 }
