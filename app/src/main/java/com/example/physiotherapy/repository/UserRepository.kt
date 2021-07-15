@@ -19,4 +19,6 @@ interface UserRepository {
     ): Result<FirebaseUser?>
 
     suspend fun getUserFromFirestore(userId: String): Result<Any?>
+
+    suspend fun logOutUser()
 }

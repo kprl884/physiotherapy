@@ -145,4 +145,10 @@ class FirebaseViewModel : ViewModel() {
             }
         }
     }
+
+    fun logOutUser() {
+        viewModelScope.launch {
+            userRepository.logOutUser()
+        }
+    }
 }

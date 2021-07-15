@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentProfileBinding
 import com.example.physiotherapy.foundations.BaseFragment
+import com.example.physiotherapy.repository.FirebaseViewModel
 import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 
@@ -27,6 +29,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var mAuth: FirebaseAuth
     private val fragmentName: String = ProfileFragment::class.java.simpleName
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var firebaseViewModel: FirebaseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +39,22 @@ class ProfileFragment : BaseFragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         mAuth = FirebaseAuth.getInstance()
+        firebaseViewModel = ViewModelProvider(this).get(FirebaseViewModel::class.java)
+
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding.profileBtnLogOut.setOnClickListener {
-            logOut()
+            firebaseViewModel.logOutUser()
             val loginFragment = LoginFragment.newInstance()
             openFragment(newInstance(), loginFragment)
 
 
         }
-
-        return binding.root
-    }
-
-    private fun logOut() {
-        mAuth.signOut()
     }
 
     private fun openFragment(deletedFragment: Fragment, fragment: Fragment) {

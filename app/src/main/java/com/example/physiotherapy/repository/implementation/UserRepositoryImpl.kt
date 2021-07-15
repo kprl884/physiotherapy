@@ -100,4 +100,12 @@ class UserRepositoryImpl : UserRepository {
             return Result.Error(exception)
         }
     }
+
+    override suspend fun logOutUser() {
+        try {
+            firebaseAuth.signOut()
+        }catch (exception : Exception) {
+             Result.Error(exception)
+        }
+    }
 }
