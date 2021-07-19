@@ -21,4 +21,6 @@ interface UserRepository {
     suspend fun getUserFromFirestore(userId: String): Result<Any?>
 
     suspend fun logOutUser()
+
+    suspend fun checkUserLoggedIn(): FirebaseUser?
 }

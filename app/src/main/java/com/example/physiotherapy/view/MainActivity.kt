@@ -1,7 +1,7 @@
 package com.example.physiotherapy.view
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,7 +19,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+private val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private var refSplashRefUser: DatabaseReference? = null
@@ -35,22 +35,19 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         //Objects.requireNonNull(actionBar)!!.setDisplayHomeAsUpEnabled(true
         setActionBar(binding.toolbarLayout.toolbarLayout)
-        binding.toolbarLayout.toolbarBackBtn.setOnClickListener { onBackPressed() }
+        val intentObject = intent
+        val bundle = intentObject.extras
+        if (bundle != null) {
+            isLogin = bundle.getBoolean("isLogin")
+        }
 
+        binding.toolbarLayout.toolbarBackBtn.setOnClickListener { onBackPressed() }
         mAuth = FirebaseAuth.getInstance()
 
         Firebase.initialize(this)
         val database = FirebaseDatabase.getInstance()
         refSplashRefUser = database.getReference("users")
 
-
-        val sharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
-        with(sharedPref.edit()) {
-            putBoolean(getString(R.string.is_user_loggin), isLogin)
-            apply()
-        }
-        val defaultValue = resources.getString((R.string.is_user_loggin_default_false))
-        val status = defaultValue.toBoolean()
         val navController = findNavController(R.id.navigation_fragment)
         AppBarConfiguration(
             setOf(
@@ -60,12 +57,12 @@ class MainActivity : AppCompatActivity() {
             )
         )
         navigation_bottom.setupWithNavController(navController)
-        val currentUser = mAuth.currentUser
-        if (currentUser == null) {
+        if (isLogin) {
             val loginFragment = LoginFragment.newInstance()
             openFragment(loginFragment)
+        } else {
+            Log.i(TAG, "current user not null")
         }
-
     }
 
     private fun openFragment(fragment: Fragment) {

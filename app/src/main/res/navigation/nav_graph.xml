@@ -118,6 +118,11 @@
             android:name="ss"
             app:argType="string" />
     </fragment>
+    <activity
+        android:id="@+id/splashActivity"
+        android:name="com.example.physiotherapy.view.SplashActivity"
+        android:label="activity_splash"
+        tools:layout="@layout/activity_splash" />
 
 
 </navigation>

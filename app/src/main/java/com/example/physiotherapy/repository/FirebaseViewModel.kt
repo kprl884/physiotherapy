@@ -13,6 +13,7 @@ import com.example.physiotherapy.model.User
 import com.example.physiotherapy.repository.implementation.UserRepositoryImpl
 import com.example.physiotherapy.utils.Result
 import com.example.physiotherapy.view.auth.login.LoginFragment
+import com.example.physiotherapy.view.home.HomeFragment
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
@@ -37,6 +38,7 @@ class FirebaseViewModel : ViewModel() {
                 activity.applicationContext
             )) {
                 is Result.Success -> {
+
                     Log.e(TAG, "Result.Success")
                     result.data?.let { firebaseUser ->
                         createUserInFirestore(
@@ -70,6 +72,7 @@ class FirebaseViewModel : ViewModel() {
 
     // TODO : toast mesaages will design
     private fun openFragment(fragment: Fragment, activity: FragmentActivity) {
+        Log.d("alp", "open fragment in viewmdel")
         val transaction = activity.supportFragmentManager.beginTransaction()
         transaction.replace(R.id.main_container, fragment)
         transaction.commit()
@@ -118,6 +121,7 @@ class FirebaseViewModel : ViewModel() {
                         // _toast.value = activity.getString(R.string.login_successful)
                         getUserFromFirestore(firebaseUser.uid, activity)
                     }
+                    openFragment(HomeFragment.newInstance(), activity as FragmentActivity)
                 }
                 is Result.Error -> {
                     //_toast.value = result.exception.message
@@ -144,6 +148,14 @@ class FirebaseViewModel : ViewModel() {
                 //_toast.value = activity.getString(R.string.request_canceled)
             }
         }
+    }
+
+    fun checkUserLoggedIn(): FirebaseUser? {
+        var _firebaseUser: FirebaseUser? = null
+        viewModelScope.launch {
+            _firebaseUser = userRepository.checkUserLoggedIn()
+        }
+        return _firebaseUser
     }
 
     fun logOutUser() {

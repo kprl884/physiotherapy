@@ -1,6 +1,7 @@
 package com.example.physiotherapy.view.auth.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,11 +45,14 @@ class LoginFragment : Fragment() {
 
         binding.loginBtnLogin.setOnClickListener {
             if (validateEmail() && validatePassword()) {
+                Log.d("alp","validate email and password")
                 firebaseViewModel.logInUserFromAuthWithEmailAndPassword(
                     binding.loginEtUserMail.text.toString(),
                     binding.loginEtPassword.text.toString(),
                     requireActivity()
                 )
+            }else {
+                Log.d("LoginFragment","email or password wrong")
             }
 
         }

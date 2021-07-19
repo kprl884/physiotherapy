@@ -41,8 +41,6 @@ class ProfileFragment : BaseFragment() {
         mAuth = FirebaseAuth.getInstance()
         firebaseViewModel = ViewModelProvider(this).get(FirebaseViewModel::class.java)
 
-
-
         return binding.root
     }
 
@@ -52,8 +50,6 @@ class ProfileFragment : BaseFragment() {
             firebaseViewModel.logOutUser()
             val loginFragment = LoginFragment.newInstance()
             openFragment(newInstance(), loginFragment)
-
-
         }
     }
 
