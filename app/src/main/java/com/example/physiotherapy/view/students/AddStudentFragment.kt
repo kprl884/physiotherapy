@@ -5,9 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentAddStudentBinding
 import com.example.physiotherapy.foundations.BaseFragment
+import com.example.physiotherapy.model.Student
+import com.example.physiotherapy.utils.Result
 
 
 class AddStudentFragment : BaseFragment() {
@@ -15,6 +21,7 @@ class AddStudentFragment : BaseFragment() {
     private lateinit var sName: String
     private lateinit var sSurname: String
     private var sPhoneNumber: Int? = null
+    private lateinit var addStudentViewModel: AddStudentViewModel
 
 
     override fun onCreateView(
@@ -23,20 +30,51 @@ class AddStudentFragment : BaseFragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_student, container, false)
+        addStudentViewModel = ViewModelProvider(this).get(AddStudentViewModel::class.java)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnBack.setOnClickListener {
+            navigateStudentsFragment()
+        }
 
+        binding.btnAddStudent.setOnClickListener {
+            val studentObject = newStudentObject()
+            addStudentViewModel.addNewStudentToFireStore(studentObject)
+            addStudentViewModel.currentResultLD.observe(viewLifecycleOwner, Observer {
+                if (it == Result.Success<Student>(studentObject)){
+                    navigateStudentsFragment()
+                }else {
+                    //toast message
+                    //todo: toast message
+                }
+            })
+        }
     }
 
-    fun createStudent() {
-        sName = binding.addStudentEtName.editableText.toString()
-        sSurname = binding.addStudentEtLastName.editableText.toString()
-        sPhoneNumber = binding.addStudentEtPhoneNumber.editableText.toString().toInt()
+    private fun navigateStudentsFragment() {
+        NavHostFragment.findNavController(this).navigate(
+            R.id.action_addStudentFragment_to_navigation_students,
+            null,
+            navOptions { // Use the Kotlin DSL for building NavOptions
+                anim {
+                    enter = android.R.animator.fade_in
+                    exit = android.R.animator.fade_out
+                }
+            }
+        )
+    }
 
+    fun newStudentObject(): Student {
+        val student = Student(
+            binding.tietStudentName.text.toString().trim(),
+            binding.tietStudentIdNo.text.toString().trim(),
+            binding.tietStudentIdPhone.text.toString().trim()
+        )
+        return student
     }
 
     override fun onResume() {
@@ -47,4 +85,6 @@ class AddStudentFragment : BaseFragment() {
     companion object {
         fun newInstance() = AddStudentFragment()
     }
+
+    // todo: validate kodu ekle
 }

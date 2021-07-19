@@ -34,4 +34,9 @@
     <string name="sim">İsim</string>
     <string name="soyisim">Soyisim</string>
     <string name="telefon_numaras">Telefon Numarası</string>
+    <string name="email">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="student_name">Student Name</string>
+    <string name="identify_number">Identify Number</string>
 </resources>

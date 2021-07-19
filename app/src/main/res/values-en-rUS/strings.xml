@@ -34,4 +34,8 @@
     <string name="nceki_sayfa">previous page</string>
     <string name="renci_ekle">Add New Student</string>
     <string name="forget_password">Forgot password</string>
+    <string name="email">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="identify_number">Identify Number</string>
 </resources>

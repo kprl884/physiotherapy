@@ -1,4 +1,4 @@
-package com.example.physiotherapy.repository
+package com.example.physiotherapy.view.auth
 
 import android.app.Activity
 import android.util.Log
@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.physiotherapy.R
 import com.example.physiotherapy.model.User
-import com.example.physiotherapy.repository.implementation.UserRepositoryImpl
+import com.example.physiotherapy.repository.FirestoreRepository
+import com.example.physiotherapy.repository.implementation.FirestoreRepositoryImpl
 import com.example.physiotherapy.utils.Result
 import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.example.physiotherapy.view.home.HomeFragment
@@ -24,7 +25,7 @@ class FirebaseViewModel : ViewModel() {
     val currentUserLD: LiveData<User>
         get() = _currentUserMLD
 
-    val userRepository: UserRepository = UserRepositoryImpl()
+    val firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl()
 
     //Email
     fun registerUserFromAuthWithEmailAndPassword(
@@ -32,7 +33,7 @@ class FirebaseViewModel : ViewModel() {
     ) {
 
         viewModelScope.launch {
-            when (val result = userRepository.registerUserFromAuthWithEmailAndPassword(
+            when (val result = firestoreRepository.registerUserFromAuthWithEmailAndPassword(
                 email,
                 password,
                 activity.applicationContext
@@ -80,7 +81,7 @@ class FirebaseViewModel : ViewModel() {
 
     private suspend fun createUserInFirestore(user: User, activity: Activity) {
         Log.d(TAG, "Result - ${user.name}")
-        when (val result = userRepository.createUserInFirestore(user)) {
+        when (val result = firestoreRepository.createUserInFirestore(user)) {
             is Result.Success -> {
                 Log.d(TAG, "Result.Error - ${user.name}")
                 _currentUserMLD.value = user
@@ -114,7 +115,7 @@ class FirebaseViewModel : ViewModel() {
     fun logInUserFromAuthWithEmailAndPassword(email: String, password: String, activity: Activity) {
         viewModelScope.launch {
             when (val result =
-                userRepository.logInUserFromAuthWithEmailAndPassword(email, password)) {
+                firestoreRepository.logInUserFromAuthWithEmailAndPassword(email, password)) {
                 is Result.Success -> {
                     Log.i(TAG, "SignIn - Result.Success - User: ${result.data}")
                     result.data?.let { firebaseUser ->
@@ -135,7 +136,7 @@ class FirebaseViewModel : ViewModel() {
     }
 
     suspend fun getUserFromFirestore(userId: String, activity: Activity) {
-        when (val result = userRepository.getUserFromFirestore(userId)) {
+        when (val result = firestoreRepository.getUserFromFirestore(userId)) {
             is Result.Success -> {
                 val _user = result.data
                 _currentUserMLD.value = _user as User
@@ -153,14 +154,30 @@ class FirebaseViewModel : ViewModel() {
     fun checkUserLoggedIn(): FirebaseUser? {
         var _firebaseUser: FirebaseUser? = null
         viewModelScope.launch {
-            _firebaseUser = userRepository.checkUserLoggedIn()
+            _firebaseUser = firestoreRepository.checkUserLoggedIn()
         }
         return _firebaseUser
     }
 
     fun logOutUser() {
         viewModelScope.launch {
-            userRepository.logOutUser()
+            firestoreRepository.logOutUser()
+        }
+    }
+
+    fun sendPasswordResetEmail(email: String, activity: Activity) {
+        viewModelScope.launch {
+            when (val result = firestoreRepository.sendPasswordResetEmail(email)) {
+                is Result.Success -> {
+                    //Toast.makeText(activity, "Check email to reset your password!", Toast.LENGTH_SHORT).show()
+                }
+                is Result.Error -> {
+                    //_toast.value = result.exception.message
+                }
+                is Result.Canceled -> {
+                    // _toast.value = activity.getString(R.string.request_canceled)
+                }
+            }
         }
     }
 }

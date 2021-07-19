@@ -57,7 +57,7 @@ class StudentsAdapter(
             touchActionDelegate: (() -> Unit)?,
             listIndex: Int
         ) {
-            itemView.student_item_tv_name.text = "${data.id} ${data.name} + ${data.surName}"
+            itemView.student_item_tv_name.text = "${data.id} ${data.name}"
             itemView.student_item_tv_id.text ="${position+1}"
             itemView.setOnClickListener {
                 touchActionStudentDelegate(data)

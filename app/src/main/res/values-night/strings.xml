@@ -32,4 +32,9 @@
     <string name="user_password">Kullanıcı Şifre</string>
     <string name="user_mail">Kullanıcı Mail</string>
     <string name="edit">Düzenle</string>
+    <string name="email">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot_password">forgot_password</string>
+    <string name="student_name">Student Name</string>
+    <string name="identify_number">Identify Number</string>
 </resources>

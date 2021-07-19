@@ -5,12 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.physiotherapy.R
-import com.example.physiotherapy.repository.FirebaseViewModel
+import com.example.physiotherapy.view.auth.FirebaseViewModel
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashActivity : AppCompatActivity() {
@@ -21,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+        //setContentView(R.layout.activity_splash)
         firebaseViewModel = ViewModelProvider(this).get(FirebaseViewModel::class.java)
         coroutineScope.launch {
             currentFirebaseUser = firebaseViewModel.checkUserLoggedIn()

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentRegisterBinding
-import com.example.physiotherapy.repository.FirebaseViewModel
+import com.example.physiotherapy.view.auth.FirebaseViewModel
 import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

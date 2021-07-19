@@ -1,5 +1,8 @@
 package com.example.physiotherapy.view.auth.login
 
+import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentLoginBinding
-import com.example.physiotherapy.repository.FirebaseViewModel
+import com.example.physiotherapy.view.auth.FirebaseViewModel
+import com.example.physiotherapy.view.MainActivity
 import com.example.physiotherapy.view.auth.register.RegisterFragment
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.dialog_forgot_password.view.*
 
 
 private val TAG = "LoginFragment"
@@ -44,17 +49,22 @@ class LoginFragment : Fragment() {
         }
 
         binding.loginBtnLogin.setOnClickListener {
-            if (validateEmail() && validatePassword()) {
-                Log.d("alp","validate email and password")
+            val email = binding.loginEtUserMail.text.toString().trim()
+            if (validateEmail(email) && validatePassword()) {
+                Log.d("alp", "validate email and password")
                 firebaseViewModel.logInUserFromAuthWithEmailAndPassword(
                     binding.loginEtUserMail.text.toString(),
                     binding.loginEtPassword.text.toString(),
                     requireActivity()
                 )
-            }else {
-                Log.d("LoginFragment","email or password wrong")
+            } else {
+                Log.d("LoginFragment", "email or password wrong")
             }
 
+        }
+
+        binding.tvLoginForgotPassword.setOnClickListener {
+            startForgotPasswordDialog()
         }
     }
 
@@ -76,8 +86,8 @@ class LoginFragment : Fragment() {
         transaction.commit()
     }
 
-    private fun validateEmail(): Boolean {
-        val email = binding.loginEtUserMail.text.toString().trim()
+    private fun validateEmail(email: String): Boolean {
+
 
         return if (!email.contains("@") && !email.contains(".")) {
             binding.loginEtUserMail.error = "Enter a valid email"
@@ -105,5 +115,30 @@ class LoginFragment : Fragment() {
         fun newInstance() = LoginFragment()
     }
 
+    private fun startForgotPasswordDialog() {
+        val dialogView = LayoutInflater.from(context).inflate(
+            R.layout.dialog_forgot_password,
+            null
+        ) // 1
+        val builder = AlertDialog.Builder(context).setView(dialogView) // 2
+        val dialog: AlertDialog = builder.show() // 3
 
+        dialogView.btn_forgotpassword_send.setOnClickListener { // 4
+            val email = dialogView.tiet_forgotpassword_email.text.toString().trim()
+            if (validateEmail(email)) // 5
+            {
+                firebaseViewModel.sendPasswordResetEmail(
+                    email = email,
+                    MainActivity()
+                )
+                dialog.dismiss() // 6
+            }
+        }
+
+        dialogView.btn_forgotpassword_cancel.setOnClickListener { // 7
+            dialog.dismiss() // 8
+        }
+
+        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // 9
+    }
 }

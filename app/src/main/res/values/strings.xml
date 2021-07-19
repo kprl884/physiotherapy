@@ -39,4 +39,9 @@
     <string name="user_password">User Password</string>
     <string name="user_mail">User Mail</string>
     <string name="edit">Edit</string>
+    <string name="email">email</string>
+    <string name="cancel">Cancel</string>
+    <string name="forgot_password">forgot password</string>
+    <string name="student_name">Student Name</string>
+    <string name="identify_number">Identify Number</string>
 </resources>

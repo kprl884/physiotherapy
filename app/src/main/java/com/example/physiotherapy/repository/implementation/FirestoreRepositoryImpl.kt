@@ -3,21 +3,26 @@ package com.example.physiotherapy.repository.implementation
 import android.content.Context
 import android.util.Log
 import com.example.physiotherapy.extension.await
+import com.example.physiotherapy.model.Student
 import com.example.physiotherapy.model.User
+import com.example.physiotherapy.repository.FireabaseConst.Companion.STUDENT_COLLECTION_NAME
 import com.example.physiotherapy.repository.FireabaseConst.Companion.USER_COLLECTION_NAME
-import com.example.physiotherapy.repository.UserRepository
+import com.example.physiotherapy.repository.FirestoreRepository
 import com.example.physiotherapy.utils.Result
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-private val TAG = "UserRepositoryImpl"
+private val TAG = "AuthRepositoryImpl"
 
-class UserRepositoryImpl : UserRepository {
+class FirestoreRepositoryImpl : FirestoreRepository {
 
     private val firestoreInstance = FirebaseFirestore.getInstance()
     private val userCollection = firestoreInstance.collection(USER_COLLECTION_NAME)
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db = Firebase.firestore
     override suspend fun registerUserFromAuthWithEmailAndPassword(
         email: String,
         password: String,
@@ -48,7 +53,7 @@ class UserRepositoryImpl : UserRepository {
         }
     }
 
-    override suspend fun createUserInFirestore(user: com.example.physiotherapy.model.User): Result<Any?> {
+    override suspend fun createUserInFirestore(user: User): Result<Any?> {
         return try {
             userCollection.document(user.id).set(user).await()
         } catch (exception: Exception) {
@@ -83,10 +88,9 @@ class UserRepositoryImpl : UserRepository {
     }
 
     override suspend fun getUserFromFirestore(userId: String): Result<Any?> {
-        try
-        {
-            return when(val resultDocumentSnapshot = userCollection.document(userId).get().await())
-            {
+        try {
+            return when (val resultDocumentSnapshot =
+                userCollection.document(userId).get().await()) {
                 is Result.Success -> {
                     val user = resultDocumentSnapshot.data.toObject(User::class.java)!!
                     Result.Success(user)
@@ -94,9 +98,7 @@ class UserRepositoryImpl : UserRepository {
                 is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
             }
-        }
-        catch (exception: Exception)
-        {
+        } catch (exception: Exception) {
             return Result.Error(exception)
         }
     }
@@ -104,12 +106,46 @@ class UserRepositoryImpl : UserRepository {
     override suspend fun logOutUser() {
         try {
             firebaseAuth.signOut()
-        }catch (exception : Exception) {
-             Result.Error(exception)
+        } catch (exception: Exception) {
+            Result.Error(exception)
         }
     }
 
     override suspend fun checkUserLoggedIn(): FirebaseUser? {
         return firebaseAuth.currentUser
     }
+
+    override suspend fun sendPasswordResetEmail(email: String): Result<Void?> {
+        return try {
+            firebaseAuth.sendPasswordResetEmail(email).await()
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun addNewStudentToFirestore(student: Student): Result<Any?> {
+        try {
+            return when (val resultDocumentSnapshot =
+                db.collection(STUDENT_COLLECTION_NAME).add(student)
+                    .await()) {
+                is Result.Success -> {
+                    Log.i(TAG, "Result.Success")
+                    val firebaseUser = resultDocumentSnapshot.data
+                    Result.Success(firebaseUser)
+                }
+                is Result.Error -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Error(resultDocumentSnapshot.exception)
+                }
+                is Result.Canceled -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Canceled(resultDocumentSnapshot.exception)
+                }
+            }
+        } catch (exception: Exception) {
+            return Result.Error(exception)
+        }
+    }
+
+
 }

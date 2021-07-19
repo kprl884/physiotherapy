@@ -17,7 +17,7 @@ class StudentView @JvmOverloads constructor(
     fun initView(student: Student, studentCallback: (Student) -> Unit) {
        this.student = student
         studentInformation = findViewById(R.id.student_item_tv_name)
-        studentInformation!!.text = "${student.id} ${student.name} + ${student.surName}"
+        studentInformation!!.text = "${student.id} ${student.name}"
         studentCallback.invoke(student)
     }
 

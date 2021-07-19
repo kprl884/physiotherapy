@@ -53,7 +53,11 @@
     <fragment
         android:id="@+id/addStudentFragment"
         android:name="com.example.physiotherapy.view.students.AddStudentFragment"
-        android:label="AddStudentFragment" />
+        android:label="AddStudentFragment" >
+        <action
+            android:id="@+id/action_addStudentFragment_to_navigation_students"
+            app:destination="@id/navigation_students" />
+    </fragment>
     <fragment
         android:id="@+id/selectedStudentFragment"
         android:name="com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment"

@@ -3,7 +3,8 @@
     <item android:drawable="@drawable/bg_gradient" />
     <item>
         <bitmap
-            android:gravity="center"
+
+            android:scaleType="fitCenter"
             android:src="@drawable/splashphotor" />
     </item>
 </layer-list>
