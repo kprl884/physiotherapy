@@ -37,4 +37,5 @@
     <string name="forgot_password">forgot_password</string>
     <string name="student_name">Student Name</string>
     <string name="identify_number">Identify Number</string>
+    <string name="request_canceled">request canceled</string>
 </resources>

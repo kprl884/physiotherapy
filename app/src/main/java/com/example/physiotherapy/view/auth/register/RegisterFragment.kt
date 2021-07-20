@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentRegisterBinding
@@ -16,6 +18,7 @@ import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_register.*
 
 private val TAG = "RegisterFragment"
 
@@ -52,6 +55,19 @@ class RegisterFragment : Fragment() {
                 )
             }
         }
+
+        firebaseViewModel.toast.observe(viewLifecycleOwner, { message ->
+            message?.let {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                firebaseViewModel.onToastShown()
+            }
+        })
+        firebaseViewModel.spinner.observe(viewLifecycleOwner, Observer { value ->
+            value.let { show ->
+                spinner_register.visibility = if (show == true) View.VISIBLE else View.GONE
+                Log.i(TAG, "$show")
+            }
+        })
         binding.registerBtnBack.setOnClickListener {
             openFragment(newInstance(), loginFragment)
         }

@@ -11,7 +11,7 @@
     <string name="username">userName</string>
     <string name="renciler">Öğrenciler</string>
     <string name="profil">Profil</string>
-    <string name="hint_password">*****</string>
+    <string name="hint_password" translatable="false">*****</string>
     <string name="forget_password">Şifreyi Unuttum</string>
     <string name="student_delete_icon" translatable="false">öğrenci silme simgesi</string>
     <string name="renci_ekle">Öğrenci ekle</string>
@@ -24,7 +24,7 @@
     <string name="students">Öğrenciler</string>
     <string name="profile">Profil</string>
     <string name="is_user_loggin">kullanıcı giriş yaptı mı</string>
-    <string name="is_user_loggin_default_false">kullanıcı oturum açma varsayılanda yanlış mı</string>
+    <string name="is_user_loggin_default_false" translatable="false">kullanıcı oturum açma varsayılanda yanlış mı</string>
     <string name="add_new_task">Yeni Görev Ekle</string>
     <string name="add_new_note">Yeni Not Ekle</string>
     <string name="add_new_student">Yeni Öğrenci Ekle</string>
@@ -44,4 +44,5 @@
     <string name="forgot_password">forgot password</string>
     <string name="student_name">Student Name</string>
     <string name="identify_number">Identify Number</string>
+    <string name="request_canceled">request canceled</string>
 </resources>

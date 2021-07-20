@@ -2,6 +2,7 @@ package com.example.physiotherapy.view.auth
 
 import android.app.Activity
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
@@ -16,6 +17,7 @@ import com.example.physiotherapy.utils.Result
 import com.example.physiotherapy.view.auth.login.LoginFragment
 import com.example.physiotherapy.view.home.HomeFragment
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 private val TAG = "FirebaseViewModel"
@@ -25,50 +27,55 @@ class FirebaseViewModel : ViewModel() {
     val currentUserLD: LiveData<User>
         get() = _currentUserMLD
 
+    private val _toast = MutableLiveData<String?>()
+    val toast: LiveData<String?>
+        get() = _toast
+
+    private val _spinner = MutableLiveData(false)
+    val spinner: LiveData<Boolean?>
+        get() = _spinner
+
+    fun onToastShown() {
+        _toast.value = null
+    }
+
     val firestoreRepository: FirestoreRepository = FirestoreRepositoryImpl()
 
     //Email
     fun registerUserFromAuthWithEmailAndPassword(
         name: String, phoneNumber: String, email: String, password: String, activity: Activity
     ) {
+        launchDataLoad {
+            viewModelScope.launch {
+                when (val result = firestoreRepository.registerUserFromAuthWithEmailAndPassword(
+                    email,
+                    password,
+                    activity.applicationContext
+                )) {
+                    is Result.Success -> {
 
-        viewModelScope.launch {
-            when (val result = firestoreRepository.registerUserFromAuthWithEmailAndPassword(
-                email,
-                password,
-                activity.applicationContext
-            )) {
-                is Result.Success -> {
-
-                    Log.e(TAG, "Result.Success")
-                    result.data?.let { firebaseUser ->
-                        createUserInFirestore(
-                            createUserObject(
-                                firebaseUser, name, phoneNumber = phoneNumber,
-                                mail = email, password = password
-                            ), activity
-                        )
+                        Log.e(TAG, "Result.Success")
+                        result.data?.let { firebaseUser ->
+                            createUserInFirestore(
+                                createUserObject(
+                                    firebaseUser, name, phoneNumber = phoneNumber,
+                                    mail = email, password = password
+                                ), activity
+                            )
+                        }
+                        openFragment(LoginFragment.newInstance(), activity as FragmentActivity)
                     }
-                    openFragment(LoginFragment.newInstance(), activity as FragmentActivity)
-                    /*
-                    activity.findNavController(R.id.navigation_fragment).navigate(
-                        R.id.action_registerFragment_to_loginFragment2,
-                        null,
-                    )
-                    */
-
-                }
-                is Result.Error -> {
-                    Log.e(TAG, "${result.exception.message}")
-                    //_toast.value = result.exception.message
-                }
-                is Result.Canceled -> {
-                    Log.e(TAG, "${result.exception!!.message}")
-                    //_toast.value = activity.getString(R.string.request_canceled)
+                    is Result.Error -> {
+                        Log.e(TAG, "${result.exception.message}")
+                        _toast.value = result.exception.message
+                    }
+                    is Result.Canceled -> {
+                        Log.e(TAG, "${result.exception!!.message}")
+                        _toast.value = activity.getString(R.string.request_canceled)
+                    }
                 }
             }
         }
-
     }
 
     // TODO : toast mesaages will design
@@ -88,10 +95,10 @@ class FirebaseViewModel : ViewModel() {
                 //startMainActivitiy(activity)
             }
             is Result.Error -> {
-                //_toast.value = result.exception.message
+                _toast.value = result.exception.message
             }
             is Result.Canceled -> {
-                //_toast.value = activity.getString(R.string.request_canceled)
+                _toast.value = activity.getString(R.string.request_canceled)
             }
         }
     }
@@ -125,10 +132,10 @@ class FirebaseViewModel : ViewModel() {
                     openFragment(HomeFragment.newInstance(), activity as FragmentActivity)
                 }
                 is Result.Error -> {
-                    //_toast.value = result.exception.message
+                    _toast.value = result.exception.message
                 }
                 is Result.Canceled -> {
-                    //_toast.value = activity.getString(R.string.request_canceled)
+                    _toast.value = activity.getString(R.string.request_canceled)
                 }
             }
         }
@@ -143,10 +150,10 @@ class FirebaseViewModel : ViewModel() {
                 //startMainActivitiy(activity = activity)
             }
             is Result.Error -> {
-                //_toast.value = result.exception.message
+                _toast.value = result.exception.message
             }
             is Result.Canceled -> {
-                //_toast.value = activity.getString(R.string.request_canceled)
+                _toast.value = activity.getString(R.string.request_canceled)
             }
         }
     }
@@ -169,14 +176,27 @@ class FirebaseViewModel : ViewModel() {
         viewModelScope.launch {
             when (val result = firestoreRepository.sendPasswordResetEmail(email)) {
                 is Result.Success -> {
-                    //Toast.makeText(activity, "Check email to reset your password!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, "Check email to reset your password!", Toast.LENGTH_SHORT).show()
                 }
                 is Result.Error -> {
-                    //_toast.value = result.exception.message
+                    _toast.value = result.exception.message
                 }
                 is Result.Canceled -> {
-                    // _toast.value = activity.getString(R.string.request_canceled)
+                    _toast.value = activity.getString(R.string.request_canceled)
                 }
+            }
+        }
+    }
+
+    private fun launchDataLoad(block: suspend () -> Unit): Job {
+        return viewModelScope.launch {
+            try {
+                _spinner.value = true
+                block()
+            } catch (error: Throwable) {
+                _toast.value = error.message
+            } finally {
+                _spinner.value = false
             }
         }
     }
