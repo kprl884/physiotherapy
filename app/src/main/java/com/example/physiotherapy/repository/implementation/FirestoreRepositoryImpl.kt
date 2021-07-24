@@ -160,9 +160,7 @@ class FirestoreRepositoryImpl : FirestoreRepository {
                         studentArrayList.add(document.toObject(Student::class.java))
                         Log.i(TAG, "${document.id} => ${document.data}")
                     }
-                    Log.d("exexex", "addOnSuccessListener 4  studentArrayList = $studentArrayList")
                     try {
-                        Log.d("exexex", "getStudentsFromFirestore 5  studentArrayList = $studentArrayList")
                         cont.resume(studentArrayList)
                     } catch (exception: Exception) {
                         Log.d(TAG, exception.localizedMessage)

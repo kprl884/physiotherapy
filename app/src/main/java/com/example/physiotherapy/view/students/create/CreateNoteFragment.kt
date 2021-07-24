@@ -63,16 +63,11 @@ class CreateNoteFragment : BaseFragment(), NullFieldChecker {
             val bundle =
                 bundleOf("newNote" to createNote())
 
-
             NavHostFragment.findNavController(this).navigate(
-                R.id.action_createNoteFragment_to_SSNotesFragment,
+                R.id.action_createNoteFragment_to_selectedStudentFragment,
                 bundle,
             )
         }
-    }
-    fun saveNote(callback: (Boolean) -> Unit) {
-
-
     }
 
     private fun createNote(): Note? = if (!hasNullField()) {

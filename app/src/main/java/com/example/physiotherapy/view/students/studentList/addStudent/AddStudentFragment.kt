@@ -1,4 +1,4 @@
-package com.example.physiotherapy.view.students
+package com.example.physiotherapy.view.students.studentList.addStudent
 
 import android.os.Bundle
 import android.view.LayoutInflater

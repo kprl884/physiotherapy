@@ -8,7 +8,7 @@
         android:id="@+id/frameLayout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.students.selectedStudentDetail.tasks.SSTasksFragment">
+        tools:context=".view.students.selectedStudentDetail.tasks.SSNotesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/selected_student_notes_recycler_view"

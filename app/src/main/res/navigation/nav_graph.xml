@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/addStudentFragment"
-        android:name="com.example.physiotherapy.view.students.AddStudentFragment"
+        android:name="com.example.physiotherapy.view.students.studentList.addStudent.AddStudentFragment"
         android:label="AddStudentFragment" >
         <action
             android:id="@+id/action_addStudentFragment_to_navigation_students"
@@ -74,6 +74,9 @@
         <action
             android:id="@+id/action_selectedStudentFragment_to_createNoteFragment"
             app:destination="@id/createNoteFragment" />
+        <action
+            android:id="@+id/action_selectedStudentFragment_to_createTaskFragment"
+            app:destination="@id/createTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_profile"
@@ -127,6 +130,11 @@
         android:name="com.example.physiotherapy.view.SplashActivity"
         android:label="activity_splash"
         tools:layout="@layout/activity_splash" />
+    <fragment
+        android:id="@+id/createTaskFragment"
+        android:name="com.example.physiotherapy.view.students.create.CreateTaskFragment"
+        android:label="fragment_create_task"
+        tools:layout="@layout/fragment_create_task" />
 
 
 </navigation>

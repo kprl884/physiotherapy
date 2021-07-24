@@ -21,11 +21,8 @@ class StudentsViewModel : ViewModel() {
     @InternalCoroutinesApi
     @ExperimentalCoroutinesApi
     val mutableData = MutableLiveData<ArrayList<Student>>().apply {
-        Log.d("exexex", "studentViewmodel 1  ")
         viewModelScope.launch(Dispatchers.IO){
-            Log.d("exexex", "studentViewmodel 2 launch  ")
             val result =firestoreRepository.getStudentsFromFirestore()
-            Log.d("exexex", "studentViewmodel 3   result = $result")
             postValue(result)
         }
     }

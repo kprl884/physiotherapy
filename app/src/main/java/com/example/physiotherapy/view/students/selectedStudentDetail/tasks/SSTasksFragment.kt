@@ -60,7 +60,7 @@ class SSTasksFragment : BaseFragment() {
 
     private fun onAddButtonClicked() {
         NavHostFragment.findNavController(this).navigate(
-            R.id.action_selectedStudentFragment_to_createNoteFragment,
+            R.id.action_selectedStudentFragment_to_createTaskFragment,
             null,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {

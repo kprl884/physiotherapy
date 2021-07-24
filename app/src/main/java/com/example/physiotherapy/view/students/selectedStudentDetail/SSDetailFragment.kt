@@ -27,12 +27,6 @@ class SSDetailFragment :
     private lateinit var listOfFragment: ArrayList<Fragment>
     private val TAG: String = SSDetailFragment::class.java.simpleName
 
-    private val mainFragment = MainFragment.newInstance()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +57,6 @@ class SSDetailFragment :
 
         val list: MutableList<SelectedStudentSlideModel> = ArrayList()
         //drawable klasörünüze 3 adet resim yüklendiğini varsayıyoruz
-        //drawable klasörünüze 3 adet resim yüklendiğini varsayıyoruz
         list.add(SelectedStudentSlideModel(getString(R.string.g_revler), R.drawable.flag_poland))
         list.add(SelectedStudentSlideModel(getString(R.string.notlar), R.drawable.flag_poland))
 
@@ -72,9 +65,7 @@ class SSDetailFragment :
 
         binding.selectedStudentPager.adapter = SSFragmentSlidePagerAdapter(this)
         binding.selectedStudentPager.currentItem = 1
-        //val adapter = SelectedStudentFragmentSlidePagerAdapter(this)
-        //theVP2InTheMainActivity.adapter = adapter
-        //theVP2InTheMainActivity.setCurrentItem(1)
+
 
         TabLayoutMediator(tabLayoutSelectedStudent, viewPager2SelectedStudent) { tab, position ->
             if (position == 0) {

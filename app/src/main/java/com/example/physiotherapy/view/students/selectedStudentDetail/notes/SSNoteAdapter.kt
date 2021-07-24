@@ -11,25 +11,30 @@ import com.example.physiotherapy.view.views.NoteView
 import kotlinx.android.synthetic.main.view_add_button.view.*
 
 
-class SSNoteAdapter(noteList: MutableList<Note> = mutableListOf(),
-                    touchActionDelegate: () -> Unit,) :
-    BaseRecyclerAdapter<Note>(noteList, null) {
+class SSNoteAdapter(
+    noteList: MutableList<Note> = mutableListOf(),
+    touchActionDelegate: () -> Unit,
+) :
+    BaseRecyclerAdapter<Note>(noteList, touchActionDelegate) {
 
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): RecyclerView.ViewHolder = if (viewType == TYPE_INFO) {
-        SSNoteViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.selected_student_note_recyclerview_item, parent, false))
+        SSNoteViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.selected_student_note_recyclerview_item, parent, false)
+        )
     } else {
-        AddButtonViewHolder(LayoutInflater.from(parent.context)
-            .inflate(R.layout.view_add_button, parent, false))
+        AddButtonViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.view_add_button, parent, false)
+        )
     }
 
 
-    class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
-
+    inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
         override fun onBind(
             data: Unit,
             position: Int,
@@ -37,11 +42,16 @@ class SSNoteAdapter(noteList: MutableList<Note> = mutableListOf(),
             listIndex: Int
         ) {
             view.buttonText.text = view.context.getString(R.string.add_new_note)
-
+            view.setOnClickListener {
+                if (touchActionDelegate != null) {
+                    touchActionDelegate()
+                }
+            }
         }
     }
 
-    class SSNoteViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view) {
+
+    inner class SSNoteViewHolder(view: View) : BaseRecyclerAdapter.BaseViewHolder<Note>(view) {
         override fun onBind(
             data: Note,
             position: Int,

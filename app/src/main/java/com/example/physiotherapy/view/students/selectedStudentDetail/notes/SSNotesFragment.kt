@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -13,9 +12,6 @@ import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentNotesBinding
 import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.model.Note
-import com.example.physiotherapy.view.MainActivity
-import com.example.physiotherapy.view.students.create.CreateNoteFragmentArgs
-import com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment
 import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment
 
 
@@ -25,25 +21,12 @@ class SSNotesFragment : BaseFragment() {
     lateinit var contentView: SSNoteListView
     private var newNote: Note? = null
     private val TAG: String = SSNotesFragment::class.java.simpleName
+
     //private val args: SSNotesFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        /*
-            binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_selected_student_notes,
-            container,
-            false
-        )
-        val inflater1 = inflater.inflate(R.layout.fragment_selected_student_notes, container, false)
-        inflater1.apply {
-            contentView = this as SSNoteListView
-        }
-        return binding.root
-         */
-
         return inflater.inflate(R.layout.fragment_selected_student_notes, container, false).apply {
             contentView = this as SSNoteListView
         }
@@ -52,7 +35,7 @@ class SSNotesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       newNote = arguments?.getParcelable("newNote")
+        newNote = arguments?.getParcelable("newNote")
         bindViewModel()
         setContentView()
     }
@@ -78,7 +61,7 @@ class SSNotesFragment : BaseFragment() {
 
     private fun onAddButtonClicked() {
         NavHostFragment.findNavController(this).navigate(
-            R.id.action_SSNotesFragment_to_createNoteFragment,
+            R.id.action_selectedStudentFragment_to_createNoteFragment,
             null,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {
