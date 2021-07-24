@@ -36,6 +36,6 @@
     <string name="cancel">Cancel</string>
     <string name="forgot_password">forgot_password</string>
     <string name="student_name">Student Name</string>
-    <string name="identify_number">Identify Number</string>
+    <string name="identify_number">Vatandaşlık Numarasıı</string>
     <string name="request_canceled">request canceled</string>
 </resources>

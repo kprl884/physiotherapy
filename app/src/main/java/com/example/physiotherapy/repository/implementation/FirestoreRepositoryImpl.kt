@@ -14,12 +14,14 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 private val TAG = "AuthRepositoryImpl"
 
 class FirestoreRepositoryImpl : FirestoreRepository {
 
-    private val firestoreInstance = FirebaseFirestore.getInstance()
+      private val firestoreInstance = FirebaseFirestore.getInstance()
     private val userCollection = firestoreInstance.collection(USER_COLLECTION_NAME)
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db = Firebase.firestore
@@ -88,8 +90,8 @@ class FirestoreRepositoryImpl : FirestoreRepository {
     }
 
     override suspend fun getUserFromFirestore(userId: String): Result<Any?> {
-        try {
-            return when (val resultDocumentSnapshot =
+        return try {
+            when (val resultDocumentSnapshot =
                 userCollection.document(userId).get().await()) {
                 is Result.Success -> {
                     val user = resultDocumentSnapshot.data.toObject(User::class.java)!!
@@ -99,7 +101,7 @@ class FirestoreRepositoryImpl : FirestoreRepository {
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
             }
         } catch (exception: Exception) {
-            return Result.Error(exception)
+            Result.Error(exception)
         }
     }
 
@@ -147,5 +149,28 @@ class FirestoreRepositoryImpl : FirestoreRepository {
         }
     }
 
+    override suspend fun getStudentsFromFirestore(): ArrayList<Student> {
+        val studentArrayList: ArrayList<Student> = arrayListOf()
+        var studentHashMap: HashMap<String, *>
+        return suspendCoroutine { cont ->
+            db.collection("students")
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        studentArrayList.add(document.toObject(Student::class.java))
+                        Log.i(TAG, "${document.id} => ${document.data}")
+                    }
+                    Log.d("exexex", "addOnSuccessListener 4  studentArrayList = $studentArrayList")
+                    try {
+                        Log.d("exexex", "getStudentsFromFirestore 5  studentArrayList = $studentArrayList")
+                        cont.resume(studentArrayList)
+                    } catch (exception: Exception) {
+                        Log.d(TAG, exception.localizedMessage)
+                        Result.Error(exception)
+                    }
+                }
 
+        }
+    }
 }
+

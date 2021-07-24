@@ -31,5 +31,7 @@ interface FirestoreRepository {
     ): Result<Void?>
 
     suspend fun addNewStudentToFirestore(student: Student): Result<Any?>
+
+    suspend fun getStudentsFromFirestore() : ArrayList<Student>
     
 }

@@ -38,6 +38,6 @@
     <string name="cancel">İptal</string>
     <string name="forgot_password">Şifreyi unuttum</string>
     <string name="student_name">Öğrenci İsmi</string>
-    <string name="identify_number">Identify Number</string>
+    <string name="identify_number">Vatandaşlık Numarasıı</string>
     <string name="request_canceled">İstek iptal edildi</string>
 </resources>

@@ -42,16 +42,18 @@ class AddStudentFragment : BaseFragment() {
         }
 
         binding.btnAddStudent.setOnClickListener {
-            val studentObject = newStudentObject()
-            addStudentViewModel.addNewStudentToFireStore(studentObject)
-            addStudentViewModel.currentResultLD.observe(viewLifecycleOwner, Observer {
-                if (it == Result.Success<Student>(studentObject)){
-                    navigateStudentsFragment()
-                }else {
-                    //toast message
-                    //todo: toast message
-                }
-            })
+            if (validateIdentify() && validateName() && validatePhoneNumber()) {
+                val studentObject = newStudentObject()
+                addStudentViewModel.addNewStudentToFireStore(studentObject)
+                addStudentViewModel.currentResultLD.observe(viewLifecycleOwner, Observer {
+                    if (it == Result.Success<Student>(studentObject)) {
+                        navigateStudentsFragment()
+                    } else {
+                        //toast message
+                        //todo: toast message
+                    }
+                })
+            }
         }
     }
 
@@ -86,5 +88,36 @@ class AddStudentFragment : BaseFragment() {
         fun newInstance() = AddStudentFragment()
     }
 
-    // todo: validate kodu ekle
+
+    private fun validateName(): Boolean {
+        val name = binding.tietStudentName.text.toString().trim()
+
+        return if (name.length < 3) {
+            binding.tietStudentName.error = "Use at least 5 characters"
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validatePhoneNumber(): Boolean {
+        val phone = binding.tietStudentIdPhone.text.toString().trim()
+
+        return if (phone.length < 11) {
+            binding.tietStudentIdPhone.error = "Use at least 11 characters"
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun validateIdentify(): Boolean {
+        val idNo = binding.tietStudentIdNo.text.toString().trim()
+        return if (idNo.length < 11) {
+            binding.tietStudentIdNo.error = "Use at least 11 characters"
+            false
+        } else {
+            true
+        }
+    }
 }
