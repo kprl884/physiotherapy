@@ -7,6 +7,6 @@ import java.io.Serializable
 @Parcelize
 data class Student(
     val name: String = "",
-    val id: String? = "",
-    val phoneNumber : String? = ""
+    val id: String = "",
+    val phoneNumber : String = ""
 ) : Parcelable, Serializable

@@ -70,13 +70,12 @@ class AddStudentFragment : BaseFragment() {
         )
     }
 
-    fun newStudentObject(): Student {
-        val student = Student(
+    private fun newStudentObject(): Student {
+        return Student(
             binding.tietStudentName.text.toString().trim(),
             binding.tietStudentIdNo.text.toString().trim(),
             binding.tietStudentIdPhone.text.toString().trim()
         )
-        return student
     }
 
     override fun onResume() {

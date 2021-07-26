@@ -1,9 +1,11 @@
 package com.example.physiotherapy.view.students.selectedStudentDetail.notes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -12,12 +14,13 @@ import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentNotesBinding
 import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.model.Note
+import com.example.physiotherapy.model.Student
 import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTasksFragment
 
 
-class SSNotesFragment : BaseFragment() {
+class SSNotesFragment(val selectedStudentObject: Student?) : BaseFragment() {
     private lateinit var binding: FragmentSelectedStudentNotesBinding
-    lateinit var noteViewModel: SSNoteViewModel
+    private lateinit var noteViewModel: SSNoteViewModel
     lateinit var contentView: SSNoteListView
     private var newNote: Note? = null
     private val TAG: String = SSNotesFragment::class.java.simpleName
@@ -60,9 +63,11 @@ class SSNotesFragment : BaseFragment() {
     }
 
     private fun onAddButtonClicked() {
+        val bundleSSDetail =
+            bundleOf("studentSSDetail" to selectedStudentObject)
         NavHostFragment.findNavController(this).navigate(
             R.id.action_selectedStudentFragment_to_createNoteFragment,
-            null,
+            bundleSSDetail,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {
                     enter = android.R.animator.fade_in

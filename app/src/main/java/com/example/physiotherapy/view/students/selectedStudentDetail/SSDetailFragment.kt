@@ -1,6 +1,7 @@
 package com.example.physiotherapy.view.students.selectedStudentDetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +14,20 @@ import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentBinding
 import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.model.SelectedStudentSlideModel
+import com.example.physiotherapy.model.Student
 import com.example.physiotherapy.model.Tag
 import com.example.physiotherapy.model.Task
 import com.example.physiotherapy.view.MainActivity
-import com.example.physiotherapy.view.MainFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class SSDetailFragment :
+class SSDetailFragment() :
     BaseFragment() {
 
     private lateinit var binding: FragmentSelectedStudentBinding
     private lateinit var listOfFragment: ArrayList<Fragment>
     private val TAG: String = SSDetailFragment::class.java.simpleName
-
+    private var selectedStudent: Student? = Student()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +42,9 @@ class SSDetailFragment :
         )
         val tag: Tag = Tag("High Priority", R.color.colorPrimary)
 
-        val task = Task("Get Groceries")
+        selectedStudent = requireArguments().getSerializable("student") as Student;
 
+        val task = Task("Get Groceries")
         val s = task.title
         // binding.selectedStudentNavView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //binding.selectedStudentNavView.itemIconTintList = null;
@@ -62,9 +64,10 @@ class SSDetailFragment :
 
         binding.selectedStudentPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL;
         binding.selectedStudentPager.adapter = SelectedStudentSlidePagerAdapter(list)
+        binding.selectedStudentPager.adapter = SSFragmentSlidePagerAdapter(this, selectedStudent)
 
-        binding.selectedStudentPager.adapter = SSFragmentSlidePagerAdapter(this)
-        binding.selectedStudentPager.currentItem = 1
+
+            binding.selectedStudentPager.currentItem = 1
 
 
         TabLayoutMediator(tabLayoutSelectedStudent, viewPager2SelectedStudent) { tab, position ->
@@ -74,10 +77,7 @@ class SSDetailFragment :
                 tab.text = getString(R.string.notlar)
             }
         }.attach()
-
-
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -92,6 +92,7 @@ class SSDetailFragment :
     }
 
     private fun onAddButtonClicked() {
+
         NavHostFragment.findNavController(this).navigate(
             R.id.action_selectedStudentFragment_to_createNoteFragment,
             null,

@@ -1,12 +1,14 @@
 package com.example.physiotherapy.view.students.create
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -16,6 +18,8 @@ import com.example.physiotherapy.databinding.FragmentCreateNoteBinding
 import com.example.physiotherapy.foundations.BaseFragment
 import com.example.physiotherapy.foundations.NullFieldChecker
 import com.example.physiotherapy.model.Note
+import com.example.physiotherapy.model.Student
+import com.example.physiotherapy.view.students.selectedStudentDetail.SSDetailFragment
 import com.example.physiotherapy.view.students.selectedStudentDetail.notes.INoteModel
 import kotlinx.android.synthetic.main.fragment_create_note.*
 
@@ -36,6 +40,9 @@ class CreateNoteFragment : BaseFragment(), NullFieldChecker {
     private lateinit var binding: FragmentCreateNoteBinding
     lateinit var model: INoteModel
     private lateinit var navController: NavController
+    private lateinit var createViewModel: CreateViewModel
+    private lateinit var selectedStudent: Student
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,23 +58,33 @@ class CreateNoteFragment : BaseFragment(), NullFieldChecker {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_note, container, false)
-
+        createViewModel = ViewModelProvider(this).get(CreateViewModel::class.java)
+        selectedStudent = arguments?.getSerializable("studentSSDetail") as Student;
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-
         binding.saveButton.setOnClickListener {
-            val bundle =
-                bundleOf("newNote" to createNote())
-
-            NavHostFragment.findNavController(this).navigate(
-                R.id.action_createNoteFragment_to_selectedStudentFragment,
-                bundle,
-            )
+            createNote()?.let { it1 -> createViewModel.addNewNote(it1, selectedStudent.id) }
+            navigateToSSFragment()
         }
+    }
+
+    private fun navigateToSSFragment() {
+        val createdNote =
+            bundleOf("student" to selectedStudent)
+        NavHostFragment.findNavController(this).navigate(
+            R.id.action_createNoteFragment_to_selectedStudentFragment,
+            createdNote,
+            navOptions { // Use the Kotlin DSL for building NavOptions
+                anim {
+                    enter = android.R.animator.fade_in
+                    exit = android.R.animator.fade_out
+                }
+            }
+        )
     }
 
     private fun createNote(): Note? = if (!hasNullField()) {
@@ -76,10 +93,10 @@ class CreateNoteFragment : BaseFragment(), NullFieldChecker {
         null
     }
 
+    override fun hasNullField(): Boolean = noteEditText.editableText.isNullOrEmpty()
+
 
     companion object {
         fun newInstance(): CreateNoteFragment = newInstance()
     }
-
-    override fun hasNullField(): Boolean = noteEditText.editableText.isNullOrEmpty()
 }

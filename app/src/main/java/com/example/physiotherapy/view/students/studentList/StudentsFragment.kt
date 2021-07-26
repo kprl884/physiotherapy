@@ -1,6 +1,7 @@
 package com.example.physiotherapy.view.students.studentList
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,7 +88,9 @@ class StudentsFragment : BaseFragment() {
     private fun selectedStudentDetail(selectedStudentItem: Student? = null) {
         val bundle =
             bundleOf("student" to selectedStudentItem)
-
+        if (selectedStudentItem != null) {
+            Log.d("exexex","studentsFragment selectedStudentItem object = ${selectedStudentItem.name}")
+        }
         NavHostFragment.findNavController(this).navigate(
             R.id.action_studentsFragment_to_selectedStudentFragment,
             bundle,
