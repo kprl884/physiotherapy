@@ -7,8 +7,9 @@ import com.example.physiotherapy.model.Note
 import com.example.physiotherapy.model.Student
 import com.example.physiotherapy.model.Task
 import com.example.physiotherapy.model.User
-import com.example.physiotherapy.repository.FireabaseConst.Companion.STUDENT_COLLECTION_NAME
-import com.example.physiotherapy.repository.FireabaseConst.Companion.USER_COLLECTION_NAME
+import com.example.physiotherapy.repository.FirebaseConst.Companion.NOTE_COLLECTION_NAME
+import com.example.physiotherapy.repository.FirebaseConst.Companion.STUDENT_COLLECTION_NAME
+import com.example.physiotherapy.repository.FirebaseConst.Companion.USER_COLLECTION_NAME
 import com.example.physiotherapy.repository.FirestoreRepository
 import com.example.physiotherapy.utils.Result
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+
 
 private val TAG = "AuthRepositoryImpl"
 
@@ -171,15 +173,16 @@ class FirestoreRepositoryImpl : FirestoreRepository {
                         Result.Error(exception)
                     }
                 }
-
         }
     }
 
     //Create Repository
-    override suspend fun addNewNoteToFirestore(note: Note,  studentId : String): Result<Any?> {
+    override suspend fun addNewNoteToFirestore(note: Note, studentId: String): Result<Any?> {
         try {
+
             return when (val resultDocumentSnapshot =
-                db.collection(STUDENT_COLLECTION_NAME).document(studentId).collection("notes").add(note)
+                db.collection(STUDENT_COLLECTION_NAME).document(studentId).collection("notes")
+                    .add(note)
                     .await()) {
                 is Result.Success -> {
                     Log.i(TAG, "Result.Success")
@@ -200,7 +203,34 @@ class FirestoreRepositoryImpl : FirestoreRepository {
         }
     }
 
-    override suspend fun addNewTaskToFirestore(task: Task,  studentId : String): Result<Any?> {
+    override suspend fun addNewTaskToFirestore(task: Task, studentId: String): Result<Any?> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getNotesFromFirestore(studentId: String): Result<Any?> {
+        return try {
+            val noteArrayList: ArrayList<Note> = arrayListOf()
+            val noteDocRef = db.collection(STUDENT_COLLECTION_NAME).document(studentId);
+            val visitReportRef = noteDocRef.collection(NOTE_COLLECTION_NAME)
+            when (val resultDocumentSnapshot =
+                db.collection(STUDENT_COLLECTION_NAME).document(studentId)
+                    .collection(NOTE_COLLECTION_NAME).get().addOnSuccessListener { documents ->
+                        for (document in documents) {
+                            noteArrayList.add(document.toObject(Note::class.java))
+                        }
+                    }.await()) {
+                is Result.Success -> {
+                    Result.Success(noteArrayList)
+                }
+                is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
+                is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
+            }
+        } catch (exception: Exception) {
+            Result.Error(exception)
+        }
+    }
+
+    override suspend fun getTasksFromFirestore(studentId: String): Result<Any?> {
         TODO("Not yet implemented")
     }
 }

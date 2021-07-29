@@ -44,6 +44,10 @@ interface FirestoreRepository {
 
     suspend fun addNewTaskToFirestore(task: Task,  studentId : String) : Result<Any?>
 
+    suspend fun getNotesFromFirestore(studentId: String) : Result<Any?>
+
+    suspend fun getTasksFromFirestore(studentId: String) : Result<Any?>
+
 
     
 }

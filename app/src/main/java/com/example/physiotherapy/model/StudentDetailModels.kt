@@ -20,8 +20,7 @@ data class Todo(
 
 @Parcelize
 data class Note(
-     val description: String,
-     val tag: Tag? = null
+     val description: String = "",
 ) : Parcelable, Serializable
 
 @Parcelize

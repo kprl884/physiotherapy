@@ -30,6 +30,7 @@ class SSNotesFragment(val selectedStudentObject: Student?) : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+
         return inflater.inflate(R.layout.fragment_selected_student_notes, container, false).apply {
             contentView = this as SSNoteListView
         }
@@ -55,8 +56,10 @@ class SSNotesFragment(val selectedStudentObject: Student?) : BaseFragment() {
 
     private fun bindViewModel() {
         noteViewModel = ViewModelProvider(this).get(SSNoteViewModel::class.java)
-
-        noteViewModel.mutableNoteList.observe(viewLifecycleOwner, Observer { noteList ->
+        if (selectedStudentObject != null) {
+            noteViewModel.getNotesFromFirestore(selectedStudentObject.id)
+        }
+        noteViewModel.currentNoteListLD.observe(viewLifecycleOwner, Observer { noteList ->
 
             contentView.updateList(noteList)
         })

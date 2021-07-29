@@ -20,8 +20,8 @@ class NoteModel : INoteModel {
     }
 
     override fun getFakeData(): MutableList<Note> = mutableListOf<Note>(
-        Note("notes 1", null),
-        Note("notes 2", null),
-        Note("notes 3", null)
+        Note("notes 1"),
+        Note("notes 2"),
+        Note("notes 3")
     )
 }

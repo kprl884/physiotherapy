@@ -66,6 +66,7 @@ class CreateNoteFragment : BaseFragment(), NullFieldChecker {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+
         binding.saveButton.setOnClickListener {
             createNote()?.let { it1 -> createViewModel.addNewNote(it1, selectedStudent.id) }
             navigateToSSFragment()
