@@ -1,8 +1,9 @@
 # physiotherapy
 It is a mobile application draft suitable for mvvm architecture, where experts can follow physiotherapy patients.
 * Login and Register Screens
-![Uploading WhatsApp Image 2021-07-29 at 20.11.22 (6).jpeg…]
-![WhatsApp Image 2021-07-29 at 20 11 22 (5)](https://user-images.githubusercontent.com/62509948/127546919-0bb68023-1caa-4d62-88e1-f254c1af541d.jpeg))
+![WhatsApp Image 2021-07-29 at 20 11 22 (6)](https://user-images.githubusercontent.com/62509948/127547077-2a1d6995-25d9-44f8-80f4-2ad83019ab91.jpeg)
+
+
 
 
 
