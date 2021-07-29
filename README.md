@@ -24,6 +24,7 @@ When the informations on the student add screen is filled successfully, its are 
 ![WhatsApp Image 2021-06-14 at 18 27 21 (1)](https://user-images.githubusercontent.com/62509948/121918231-86502d80-cd3e-11eb-98f4-a619c8301bb8.jpeg)
 
 * Profile Fragment
+* 
  ![WhatsApp Image 2021-07-29 at 20 11 22](https://user-images.githubusercontent.com/62509948/127547271-d00a56e4-b22d-43ef-9583-c03cc588fd4a.jpeg)
 
 
