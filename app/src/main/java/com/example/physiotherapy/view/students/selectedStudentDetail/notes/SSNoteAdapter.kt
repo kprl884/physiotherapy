@@ -33,7 +33,6 @@ class SSNoteAdapter(
         )
     }
 
-
     inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view) {
         override fun onBind(
             data: Unit,

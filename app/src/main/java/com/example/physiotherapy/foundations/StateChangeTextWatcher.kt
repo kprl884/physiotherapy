@@ -8,11 +8,11 @@ open class StateChangeTextWatcher : TextWatcher{
     var previousValue : String? = null
 
     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+        // no op
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+        // no op
     }
 
     override fun afterTextChanged(p0: Editable?) {
