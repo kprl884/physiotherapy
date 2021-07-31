@@ -134,7 +134,11 @@
         android:id="@+id/createTaskFragment"
         android:name="com.example.physiotherapy.view.students.create.CreateTaskFragment"
         android:label="fragment_create_task"
-        tools:layout="@layout/fragment_create_task" />
+        tools:layout="@layout/fragment_create_task" >
+        <action
+            android:id="@+id/action_createTaskFragment_to_selectedStudentFragment"
+            app:destination="@id/selectedStudentFragment" />
+    </fragment>
 
 
 </navigation>

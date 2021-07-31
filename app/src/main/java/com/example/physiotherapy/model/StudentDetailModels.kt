@@ -15,7 +15,7 @@ data class Task  constructor(
 @Parcelize
 data class Todo(
      val description: String,
-     var isComplete: Boolean = false,
+     var isComplete: Boolean = false
 ): Parcelable, Serializable
 
 @Parcelize

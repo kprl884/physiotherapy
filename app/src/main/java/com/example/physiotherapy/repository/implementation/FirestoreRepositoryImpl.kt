@@ -179,7 +179,6 @@ class FirestoreRepositoryImpl : FirestoreRepository {
     //Create Repository
     override suspend fun addNewNoteToFirestore(note: Note, studentId: String): Result<Any?> {
         try {
-
             return when (val resultDocumentSnapshot =
                 db.collection(STUDENT_COLLECTION_NAME).document(studentId).collection("notes")
                     .add(note)
@@ -204,7 +203,28 @@ class FirestoreRepositoryImpl : FirestoreRepository {
     }
 
     override suspend fun addNewTaskToFirestore(task: Task, studentId: String): Result<Any?> {
-        TODO("Not yet implemented")
+        try {
+            return when (val resultDocumentSnapshot =
+                db.collection(STUDENT_COLLECTION_NAME).document(studentId).collection("tasks")
+                    .add(task)
+                    .await()) {
+                is Result.Success -> {
+                    Log.i(TAG, "Result.Success")
+                    val firebaseUser = resultDocumentSnapshot.data
+                    Result.Success(firebaseUser)
+                }
+                is Result.Error -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Error(resultDocumentSnapshot.exception)
+                }
+                is Result.Canceled -> {
+                    Log.e(TAG, "${resultDocumentSnapshot.exception}")
+                    Result.Canceled(resultDocumentSnapshot.exception)
+                }
+            }
+        } catch (exception: Exception) {
+            return Result.Error(exception)
+        }
     }
 
     override suspend fun getNotesFromFirestore(studentId: String): Result<Any?> {

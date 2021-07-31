@@ -60,7 +60,6 @@ class SSNotesFragment(val selectedStudentObject: Student?) : BaseFragment() {
             noteViewModel.getNotesFromFirestore(selectedStudentObject.id)
         }
         noteViewModel.currentNoteListLD.observe(viewLifecycleOwner, Observer { noteList ->
-
             contentView.updateList(noteList)
         })
     }
@@ -81,6 +80,6 @@ class SSNotesFragment(val selectedStudentObject: Student?) : BaseFragment() {
     }
 
     companion object {
-        fun newInstance() = SSTasksFragment()
+        fun newInstance() = SSNotesFragment(selectedStudentObject = null)
     }
 }

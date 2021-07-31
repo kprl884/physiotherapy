@@ -9,7 +9,7 @@ import com.example.physiotherapy.view.students.selectedStudentDetail.tasks.SSTas
 
 class SSFragmentSlidePagerAdapter(fragment: Fragment, selectedStudent: Student?) : FragmentStateAdapter(fragment) {
 
-    private val mFragmentList = arrayListOf<Fragment>(SSTasksFragment(),SSNotesFragment(selectedStudent))
+    private val mFragmentList = arrayListOf<Fragment>(SSTasksFragment(selectedStudent),SSNotesFragment(selectedStudent))
     override fun getItemCount():Int = mFragmentList.size
     override fun createFragment(position: Int): Fragment = mFragmentList[position]
 }

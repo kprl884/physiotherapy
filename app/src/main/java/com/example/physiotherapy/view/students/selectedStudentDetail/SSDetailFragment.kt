@@ -92,7 +92,6 @@ class SSDetailFragment() :
     }
 
     private fun onAddButtonClicked() {
-
         NavHostFragment.findNavController(this).navigate(
             R.id.action_selectedStudentFragment_to_createNoteFragment,
             null,

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
@@ -11,9 +12,10 @@ import androidx.navigation.navOptions
 import com.example.physiotherapy.R
 import com.example.physiotherapy.databinding.FragmentSelectedStudentTasksBinding
 import com.example.physiotherapy.foundations.BaseFragment
+import com.example.physiotherapy.model.Student
 
 
-class SSTasksFragment : BaseFragment() {
+class SSTasksFragment(val selectedStudentObject: Student?) : BaseFragment() {
     private lateinit var binding: FragmentSelectedStudentTasksBinding
     lateinit var taskViewModel: SSTaskViewModel
     lateinit var contentView: SSTaskListView
@@ -55,13 +57,15 @@ class SSTasksFragment : BaseFragment() {
     }
 
     companion object {
-        fun newInstance() = SSTasksFragment()
+        fun newInstance() = SSTasksFragment(selectedStudentObject = null)
     }
 
     private fun onAddButtonClicked() {
+        val bundleSSDetail =
+            bundleOf("studentSSDetail" to selectedStudentObject)
         NavHostFragment.findNavController(this).navigate(
             R.id.action_selectedStudentFragment_to_createTaskFragment,
-            null,
+            bundleSSDetail,
             navOptions { // Use the Kotlin DSL for building NavOptions
                 anim {
                     enter = android.R.animator.fade_in
